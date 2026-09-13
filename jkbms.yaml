@@ -1,0 +1,46 @@
+esphome:
+  name: jkbms-dashboard
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+
+wifi:
+  ssid: "Ta2"
+  password: "09122004"
+
+# Вмикаємо автономний локальний веб-сервер (Дашборд)
+web_server:
+  port: 80
+
+# Активація Bluetooth
+esp32_ble_tracker:
+
+ble_client:
+  - mac_address: "98:DA:F0:0A:E9:85" # Вкажіть MAC-адресу вашої JK BMS
+    id: jk_bms_ble
+
+external_components:
+  - source: github://syssi/esphome-jk-bms@main
+
+jk_bms_ble:
+  ble_client_id: jk_bms_ble
+  id: jkbms_dev
+
+# Дані, які виводяться на веб-сторінку
+sensor:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev
+    total_voltage:
+      name: "Напруга АКБ"
+    current:
+      name: "Струм"
+    power:
+      name: "Потужність"
+    state_of_charge:
+      name: "Заряд SOC (%)"
+    min_cell_voltage:
+      name: "Мін. напруга комірки"
+    max_cell_voltage:
+      name: "Макс. напруга комірки"
