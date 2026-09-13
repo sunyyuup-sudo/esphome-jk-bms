@@ -11,9 +11,18 @@ wifi:
   ssid: "Ta2"
   password: "09122004"
 
-# Локальний веб-дашборд
+# Залишаємо локальний веб-сервер як резервний канал
 web_server:
   port: 80
+
+# Локальний API для можливих інтеграцій
+api:
+
+# Інтеграція з MQTT для мобільного додатка MQTT Dash
+mqtt:
+  broker: broker.hivemq.com
+  port: 1883
+  topic_prefix: "jkbms_ta2"
 
 esp32_ble_tracker:
 
@@ -29,7 +38,7 @@ jk_bms_ble:
   id: jkbms_dev
   protocol_version: JK02_32S
 
-# Перемикачі та кнопки керування BMS
+# Перемикачі керування ключами та балансуванням
 switch:
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev
@@ -50,7 +59,7 @@ sensor:
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev
 
-    # Загальні параметри акумулятора
+    # Загальні параметри АКБ
     total_voltage:
       name: "Напруга АКБ"
     current:
@@ -62,7 +71,7 @@ sensor:
     capacity_remaining:
       name: "Залишкова ємність (Ач)"
     
-    # Мін / Макс та дельта
+    # Дельта і межі комірок
     min_cell_voltage:
       name: "Мін. напруга комірки"
     max_cell_voltage:
@@ -70,7 +79,7 @@ sensor:
     delta_cell_voltage:
       name: "Різниця напруг (Дельта)"
 
-    # Датчики температури
+    # Температури
     power_tube_temperature:
       name: "Температура MOSFET"
     temperature_sensor_1:
@@ -78,7 +87,7 @@ sensor:
     temperature_sensor_2:
       name: "Температура АКБ T2"
 
-    # Напруга кожної з 8 комірок
+    # 8 комірок
     cell_voltage_1:
       name: "Комірка 1"
     cell_voltage_2:
