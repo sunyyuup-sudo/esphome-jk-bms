@@ -43,7 +43,7 @@ switch:
 button:
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev
-    restart_bms:
+    restart:
       name: "Перезавантажити BMS"
 
 sensor:
