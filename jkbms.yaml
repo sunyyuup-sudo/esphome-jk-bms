@@ -3,6 +3,7 @@ esphome:
 
 esp32:
   board: esp32-c3-devkitm-1
+  variant: esp32c3
   framework:
     type: esp-idf
 
@@ -10,15 +11,14 @@ wifi:
   ssid: "Ta2"
   password: "09122004"
 
-# Вмикаємо автономний локальний веб-сервер (Дашборд)
+# Автономний локальний веб-сервер
 web_server:
   port: 80
 
-# Активація Bluetooth
 esp32_ble_tracker:
 
 ble_client:
-  - mac_address: "98:DA:F0:0A:E9:85" # Вкажіть MAC-адресу вашої JK BMS
+  - mac_address: "98:DA:F0:0A:E9:85"
     id: jk_bms_ble
 
 external_components:
@@ -28,10 +28,9 @@ jk_bms_ble:
   ble_client_id: jk_bms_ble
   id: jkbms_dev
 
-# Дані, які виводяться на веб-сторінку
 sensor:
   - platform: jk_bms_ble
-    jk_bms_ble_id: jkbms_dev
+    jkbms_ble_id: jkbms_dev
     total_voltage:
       name: "Напруга АКБ"
     current:
