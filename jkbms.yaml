@@ -11,7 +11,7 @@ wifi:
   ssid: "Ta2"
   password: "09122004"
 
-# Автономний локальний веб-сервер
+# Автономний локальний веб-сервер (Дашборд)
 web_server:
   port: 80
 
@@ -19,13 +19,13 @@ esp32_ble_tracker:
 
 ble_client:
   - mac_address: "98:DA:F0:0A:E9:85"
-    id: jk_bms_ble
+    id: jkbms_ble_client
 
 external_components:
   - source: github://syssi/esphome-jk-bms@main
 
 jk_bms_ble:
-  ble_client_id: jk_bms_ble
+  ble_client_id: jkbms_ble_client
   id: jkbms_dev
 
 sensor:
