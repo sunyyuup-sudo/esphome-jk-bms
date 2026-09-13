@@ -27,11 +27,11 @@ external_components:
 jk_bms_ble:
   ble_client_id: jkbms_ble_client
   id: jkbms_dev
-  protocol_version: JK04  # Обов'язкова версія протоколу для нових версій інтеграції
+  protocol_version: JK04
 
 sensor:
   - platform: jk_bms_ble
-    jkbms_ble_id: jkbms_dev
+    jk_bms_ble_id: jkbms_dev
     total_voltage:
       name: "Напруга АКБ"
     current:
