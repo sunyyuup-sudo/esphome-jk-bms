@@ -27,7 +27,24 @@ external_components:
 jk_bms_ble:
   ble_client_id: jkbms_ble_client
   id: jkbms_dev
-  protocol_version: JK02_24S
+  protocol_version: JK02_32S
+
+# Перемикачі та кнопки керування BMS
+switch:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev
+    charging:
+      name: "Керування зарядом (Charge)"
+    discharging:
+      name: "Керування розрядом (Discharge)"
+    balancer:
+      name: "Балансувальник (Balancer)"
+
+button:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev
+    restart_bms:
+      name: "Перезавантажити BMS"
 
 sensor:
   - platform: jk_bms_ble
