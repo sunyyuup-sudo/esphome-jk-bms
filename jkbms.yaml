@@ -21,7 +21,6 @@ mqtt:
   broker: broker.hivemq.com
   port: 1883
   topic_prefix: "jkbms_ta2"
-  # Увімкнемо відправку всієї можливої доступної інформації у зручному форматі
   on_message:
     - topic: "jkbms_ta2/command/#"
       then:
@@ -51,143 +50,142 @@ switch:
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_1
     charging:
-      name: "🪫 [АКБ 1] Заряд"
+      name: "🪫 [Bat 40] Заряд"
       id: bms1_chg_sw
     discharging:
-      name: "🪫 [АКБ 1] Розряд"
+      name: "🪫 [Bat 40] Розряд"
       id: bms1_dsg_sw
     balancer:
-      name: "🪫 [АКБ 1] Балансир"
+      name: "🪫 [Bat 40] Балансир"
       id: bms1_bal_sw
 
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_2
     charging:
-      name: "🔋 [АКБ 2] Заряд"
+      name: "🔋 [Bat 100] Заряд"
       id: bms2_chg_sw
     discharging:
-      name: "🔋 [АКБ 2] Розряд"
+      name: "🔋 [Bat 100] Розряд"
       id: bms2_dsg_sw
     balancer:
-      name: "🔋 [АКБ 2] Балансир"
+      name: "🔋 [Bat 100] Балансир"
       id: bms2_bal_sw
 
 button:
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_1
     restart:
-      name: "🪫 [АКБ 1] Перезавантажити"
+      name: "🪫 [Bat 40] Перезавантажити"
     shutdown:
-      name: "🪫 [АКБ 1] Вимкнути (Сон)"
+      name: "🪫 [Bat 40] Вимкнути (Сон)"
 
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_2
     restart:
-      name: "🔋 [АКБ 2] Перезавантажити"
+      name: "🔋 [Bat 100] Перезавантажити"
     shutdown:
-      name: "🔋 [АКБ 2] Вимкнути (Сон)"
+      name: "🔋 [Bat 100] Вимкнути (Сон)"
 
 sensor:
-  # ================= БАТАРЕЯ 1 =================
+  # ================= Bat 40 =================
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_1
 
     total_voltage:
-      name: "🪫 [АКБ 1] Напруга"
+      name: "🪫 [Bat 40] Напруга"
       id: bms1_total_voltage
     current:
-      name: "🪫 [АКБ 1] Струм"
+      name: "🪫 [Bat 40] Струм"
       id: bms1_current
     power:
-      name: "🪫 [АКБ 1] Потужність"
+      name: "🪫 [Bat 40] Потужність"
       id: bms1_power
     state_of_charge:
-      name: "🪫 [АКБ 1] SOC (%)"
+      name: "🪫 [Bat 40] SOC (%)"
       id: bms1_soc
     capacity_remaining:
-      name: "🪫 [АКБ 1] Залишок (Ач)"
+      name: "🪫 [Bat 40] Залишок (Ач)"
       id: bms1_capacity_remaining
     min_cell_voltage:
-      name: "🪫 [АКБ 1] Мін. комірка A"
+      name: "🪫 [Bat 40] Мін. комірка A"
       id: bms1_min_cell
     max_cell_voltage:
-      name: "🪫 [АКБ 1] Макс. комірка B"
+      name: "🪫 [Bat 40] Макс. комірка B"
       id: bms1_max_cell
     delta_cell_voltage:
-      name: "🪫 [АКБ 1] Дельта C"
+      name: "🪫 [Bat 40] Дельта C"
       id: bms1_delta
     mosfet_temperature:
-      name: "🪫 [АКБ 1] MOSFET M"
+      name: "🪫 [Bat 40] MOSFET M"
       id: bms1_mosfet_temp
     temperature_sensor_1:
-      name: "🪫 [АКБ 1] Термодатчик 1"
+      name: "🪫 [Bat 40] Термодатчик 1"
       id: bms1_temp_1
     temperature_sensor_2:
-      name: "🪫 [АКБ 1] Термодатчик 2"
+      name: "🪫 [Bat 40] Термодатчик 2"
       id: bms1_temp_2
 
-    cell_voltage_1: { name: "🪫 [АКБ 1] Комірка 1", id: bms1_cell_1 }
-    cell_voltage_2: { name: "🪫 [АКБ 1] Комірка 2", id: bms1_cell_2 }
-    cell_voltage_3: { name: "🪫 [АКБ 1] Комірка 3", id: bms1_cell_3 }
-    cell_voltage_4: { name: "🪫 [АКБ 1] Комірка 4", id: bms1_cell_4 }
-    cell_voltage_5: { name: "🪫 [АКБ 1] Комірка 5", id: bms1_cell_5 }
-    cell_voltage_6: { name: "🪫 [АКБ 1] Комірка 6", id: bms1_cell_6 }
-    cell_voltage_7: { name: "🪫 [АКБ 1] Комірка 7", id: bms1_cell_7 }
-    cell_voltage_8: { name: "🪫 [АКБ 1] Комірка 8", id: bms1_cell_8 }
+    cell_voltage_1: { name: "🪫 [Bat 40] Комірка 1", id: bms1_cell_1 }
+    cell_voltage_2: { name: "🪫 [Bat 40] Комірка 2", id: bms1_cell_2 }
+    cell_voltage_3: { name: "🪫 [Bat 40] Комірка 3", id: bms1_cell_3 }
+    cell_voltage_4: { name: "🪫 [Bat 40] Комірка 4", id: bms1_cell_4 }
+    cell_voltage_5: { name: "🪫 [Bat 40] Комірка 5", id: bms1_cell_5 }
+    cell_voltage_6: { name: "🪫 [Bat 40] Комірка 6", id: bms1_cell_6 }
+    cell_voltage_7: { name: "🪫 [Bat 40] Комірка 7", id: bms1_cell_7 }
+    cell_voltage_8: { name: "🪫 [Bat 40] Комірка 8", id: bms1_cell_8 }
 
-  # ================= БАТАРЕЯ 2 =================
+  # ================= Bat 100 =================
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_2
 
     total_voltage:
-      name: "🔋 [АКБ 2] Напруга"
+      name: "🔋 [Bat 100] Напруга"
       id: bms2_total_voltage
     current:
-      name: "🔋 [АКБ 2] Струм"
+      name: "🔋 [Bat 100] Струм"
       id: bms2_current
     power:
-      name: "🔋 [АКБ 2] Потужність"
+      name: "🔋 [Bat 100] Потужність"
       id: bms2_power
     state_of_charge:
-      name: "🔋 [АКБ 2] SOC (%)"
+      name: "🔋 [Bat 100] SOC (%)"
       id: bms2_soc
     capacity_remaining:
-      name: "🔋 [АКБ 2] Залишок (Ач)"
+      name: "🔋 [Bat 100] Залишок (Ач)"
       id: bms2_capacity_remaining
     min_cell_voltage:
-      name: "🔋 [АКБ 2] Мін. комірка A"
+      name: "🔋 [Bat 100] Мін. комірка A"
       id: bms2_min_cell
     max_cell_voltage:
-      name: "🔋 [АКБ 2] Макс. комірка B"
+      name: "🔋 [Bat 100] Макс. комірка B"
       id: bms2_max_cell
     delta_cell_voltage:
-      name: "🔋 [АКБ 2] Дельта C"
+      name: "🔋 [Bat 100] Дельта C"
       id: bms2_delta
     mosfet_temperature:
-      name: "🔋 [АКБ 2] MOSFET M"
+      name: "🔋 [Bat 100] MOSFET M"
       id: bms2_mosfet_temp
     temperature_sensor_1:
-      name: "🔋 [АКБ 2] Термодатчик 1"
+      name: "🔋 [Bat 100] Термодатчик 1"
       id: bms2_temp_1
     temperature_sensor_2:
-      name: "🔋 [АКБ 2] Термодатчик 2"
+      name: "🔋 [Bat 100] Термодатчик 2"
       id: bms2_temp_2
 
-    cell_voltage_1: { name: "🔋 [АКБ 2] Комірка 1", id: bms2_cell_1 }
-    cell_voltage_2: { name: "🔋 [АКБ 2] Комірка 2", id: bms2_cell_2 }
-    cell_voltage_3: { name: "🔋 [АКБ 2] Комірка 3", id: bms2_cell_3 }
-    cell_voltage_4: { name: "🔋 [АКБ 2] Комірка 4", id: bms2_cell_4 }
-    cell_voltage_5: { name: "🔋 [АКБ 2] Комірка 5", id: bms2_cell_5 }
-    cell_voltage_6: { name: "🔋 [АКБ 2] Комірка 6", id: bms2_cell_6 }
-    cell_voltage_7: { name: "🔋 [АКБ 2] Комірка 7", id: bms2_cell_7 }
-    cell_voltage_8: { name: "🔋 [АКБ 2] Комірка 8", id: bms2_cell_8 }
+    cell_voltage_1: { name: "🔋 [Bat 100] Комірка 1", id: bms2_cell_1 }
+    cell_voltage_2: { name: "🔋 [Bat 100] Комірка 2", id: bms2_cell_2 }
+    cell_voltage_3: { name: "🔋 [Bat 100] Комірка 3", id: bms2_cell_3 }
+    cell_voltage_4: { name: "🔋 [Bat 100] Комірка 4", id: bms2_cell_4 }
+    cell_voltage_5: { name: "🔋 [Bat 100] Комірка 5", id: bms2_cell_5 }
+    cell_voltage_6: { name: "🔋 [Bat 100] Комірка 6", id: bms2_cell_6 }
+    cell_voltage_7: { name: "🔋 [Bat 100] Комірка 7", id: bms2_cell_7 }
+    cell_voltage_8: { name: "🔋 [Bat 100] Комірка 8", id: bms2_cell_8 }
 
-# Періодична відправка загального JSON по кожній батареї окремим таймером
 interval:
   - interval: 10s
     then:
       - mqtt.publish_json:
-          topic: "jkbms_ta2/battery/1/json"
+          topic: "jkbms_ta2/battery/bat40/json"
           payload: |-
             root["voltage"] = id(bms1_total_voltage).state;
             root["current"] = id(bms1_current).state;
@@ -202,7 +200,7 @@ interval:
             root["balancer"] = id(bms1_bal_sw).state;
 
       - mqtt.publish_json:
-          topic: "jkbms_ta2/battery/2/json"
+          topic: "jkbms_ta2/battery/bat100/json"
           payload: |-
             root["voltage"] = id(bms2_total_voltage).state;
             root["current"] = id(bms2_current).state;
