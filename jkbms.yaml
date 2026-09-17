@@ -27,7 +27,7 @@ mqtt:
 esp32_ble_tracker:
 
 ble_client:
-  - mac_address: "98:DA:F0:0A:E9:85"
+  - mac_address: "A4:C1:38:0F:3A:D5"
     id: jkbms_ble_client
 
 external_components:
