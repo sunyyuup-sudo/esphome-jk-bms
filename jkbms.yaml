@@ -78,35 +78,46 @@ sensor:
 
     total_voltage:
       name: "🪫 [АКБ 1] Напруга"
+      id: bms1_total_voltage
     current:
       name: "🪫 [АКБ 1] Струм"
+      id: bms1_current
     power:
       name: "🪫 [АКБ 1] Потужність"
+      id: bms1_power
     state_of_charge:
       name: "🪫 [АКБ 1] SOC (%)"
+      id: bms1_soc
     capacity_remaining:
       name: "🪫 [АКБ 1] Залишок (Ач)"
+      id: bms1_capacity_remaining
     min_cell_voltage:
       name: "🪫 [АКБ 1] Мін. комірка"
+      id: bms1_min_cell
     max_cell_voltage:
       name: "🪫 [АКБ 1] Макс. комірка"
+      id: bms1_max_cell
     delta_cell_voltage:
       name: "🪫 [АКБ 1] Дельта"
-    power_tube_temperature:
+      id: bms1_delta
+    mosfet_temperature:
       name: "🪫 [АКБ 1] MOSFET"
+      id: bms1_mosfet_temp
     temperature_sensor_1:
       name: "🪫 [АКБ 1] Термодатчик 1"
+      id: bms1_temp_1
     temperature_sensor_2:
       name: "🪫 [АКБ 1] Термодатчик 2"
+      id: bms1_temp_2
 
-    cell_voltage_1: { name: "🪫 [АКБ 1] Комірка 1" }
-    cell_voltage_2: { name: "🪫 [АКБ 1] Комірка 2" }
-    cell_voltage_3: { name: "🪫 [АКБ 1] Комірка 3" }
-    cell_voltage_4: { name: "🪫 [АКБ 1] Комірка 4" }
-    cell_voltage_5: { name: "🪫 [АКБ 1] Комірка 5" }
-    cell_voltage_6: { name: "🪫 [АКБ 1] Комірка 6" }
-    cell_voltage_7: { name: "🪫 [АКБ 1] Комірка 7" }
-    cell_voltage_8: { name: "🪫 [АКБ 1] Комірка 8" }
+    cell_voltage_1: { name: "🪫 [АКБ 1] Комірка 1", id: bms1_cell_1 }
+    cell_voltage_2: { name: "🪫 [АКБ 1] Комірка 2", id: bms1_cell_2 }
+    cell_voltage_3: { name: "🪫 [АКБ 1] Комірка 3", id: bms1_cell_3 }
+    cell_voltage_4: { name: "🪫 [АКБ 1] Комірка 4", id: bms1_cell_4 }
+    cell_voltage_5: { name: "🪫 [АКБ 1] Комірка 5", id: bms1_cell_5 }
+    cell_voltage_6: { name: "🪫 [АКБ 1] Комірка 6", id: bms1_cell_6 }
+    cell_voltage_7: { name: "🪫 [АКБ 1] Комірка 7", id: bms1_cell_7 }
+    cell_voltage_8: { name: "🪫 [АКБ 1] Комірка 8", id: bms1_cell_8 }
 
   # ================= БАТАРЕЯ 2 (Зелена батарейка) =================
   - platform: jk_bms_ble
@@ -114,32 +125,43 @@ sensor:
 
     total_voltage:
       name: "🔋 [АКБ 2] Напруга"
+      id: bms2_total_voltage
     current:
       name: "🔋 [АКБ 2] Струм"
+      id: bms2_current
     power:
       name: "🔋 [АКБ 2] Потужність"
+      id: bms2_power
     state_of_charge:
       name: "🔋 [АКБ 2] SOC (%)"
+      id: bms2_soc
     capacity_remaining:
       name: "🔋 [АКБ 2] Залишок (Ач)"
+      id: bms2_capacity_remaining
     min_cell_voltage:
       name: "🔋 [АКБ 2] Мін. комірка"
+      id: bms2_min_cell
     max_cell_voltage:
       name: "🔋 [АКБ 2] Макс. комірка"
+      id: bms2_max_cell
     delta_cell_voltage:
       name: "🔋 [АКБ 2] Дельта"
-    power_tube_temperature:
+      id: bms2_delta
+    mosfet_temperature:
       name: "🔋 [АКБ 2] MOSFET"
+      id: bms2_mosfet_temp
     temperature_sensor_1:
       name: "🔋 [АКБ 2] Термодатчик 1"
+      id: bms2_temp_1
     temperature_sensor_2:
       name: "🔋 [АКБ 2] Термодатчик 2"
+      id: bms2_temp_2
 
-    cell_voltage_1: { name: "🔋 [АКБ 2] Комірка 1" }
-    cell_voltage_2: { name: "🔋 [АКБ 2] Комірка 2" }
-    cell_voltage_3: { name: "🔋 [АКБ 2] Комірка 3" }
-    cell_voltage_4: { name: "🔋 [АКБ 2] Комірка 4" }
-    cell_voltage_5: { name: "🔋 [АКБ 2] Комірка 5" }
-    cell_voltage_6: { name: "🔋 [АКБ 2] Комірка 6" }
-    cell_voltage_7: { name: "🔋 [АКБ 2] Комірка 7" }
-    cell_voltage_8: { name: "🔋 [АКБ 2] Комірка 8" }
+    cell_voltage_1: { name: "🔋 [АКБ 2] Комірка 1", id: bms2_cell_1 }
+    cell_voltage_2: { name: "🔋 [АКБ 2] Комірка 2", id: bms2_cell_2 }
+    cell_voltage_3: { name: "🔋 [АКБ 2] Комірка 3", id: bms2_cell_3 }
+    cell_voltage_4: { name: "🔋 [АКБ 2] Комірка 4", id: bms2_cell_4 }
+    cell_voltage_5: { name: "🔋 [АКБ 2] Комірка 5", id: bms2_cell_5 }
+    cell_voltage_6: { name: "🔋 [АКБ 2] Комірка 6", id: bms2_cell_6 }
+    cell_voltage_7: { name: "🔋 [АКБ 2] Комірка 7", id: bms2_cell_7 }
+    cell_voltage_8: { name: "🔋 [АКБ 2] Комірка 8", id: bms2_cell_8 }
