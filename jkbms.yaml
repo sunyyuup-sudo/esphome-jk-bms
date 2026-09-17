@@ -18,6 +18,13 @@ web_server:
 api:
 
 logger:
+  level: WARN
+  logs:
+    esp32_ble_tracker: WARN
+    ble_client: WARN
+    jk_bms_ble: WARN
+    mqtt: WARN
+    wifi: WARN
 
 mqtt:
   broker: broker.hivemq.com
