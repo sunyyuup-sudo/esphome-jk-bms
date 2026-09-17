@@ -17,6 +17,8 @@ web_server:
 
 api:
 
+logger:
+
 mqtt:
   broker: broker.hivemq.com
   port: 1883
