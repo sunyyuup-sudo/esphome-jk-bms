@@ -21,6 +21,11 @@ mqtt:
   broker: broker.hivemq.com
   port: 1883
   topic_prefix: "jkbms_ta2"
+  # Увімкнемо відправку всієї можливої доступної інформації у зручному форматі
+  on_message:
+    - topic: "jkbms_ta2/command/#"
+      then:
+        - logger.log: "Отримано MQTT команду"
 
 esp32_ble_tracker:
 
@@ -47,19 +52,25 @@ switch:
     jk_bms_ble_id: jkbms_dev_1
     charging:
       name: "🪫 [АКБ 1] Заряд"
+      id: bms1_chg_sw
     discharging:
       name: "🪫 [АКБ 1] Розряд"
+      id: bms1_dsg_sw
     balancer:
       name: "🪫 [АКБ 1] Балансир"
+      id: bms1_bal_sw
 
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_2
     charging:
       name: "🔋 [АКБ 2] Заряд"
+      id: bms2_chg_sw
     discharging:
       name: "🔋 [АКБ 2] Розряд"
+      id: bms2_dsg_sw
     balancer:
       name: "🔋 [АКБ 2] Балансир"
+      id: bms2_bal_sw
 
 button:
   - platform: jk_bms_ble
@@ -77,7 +88,7 @@ button:
       name: "🔋 [АКБ 2] Вимкнути (Сон)"
 
 sensor:
-  # ================= БАТАРЕЯ 1 (Червона батарейка) =================
+  # ================= БАТАРЕЯ 1 =================
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_1
 
@@ -124,7 +135,7 @@ sensor:
     cell_voltage_7: { name: "🪫 [АКБ 1] Комірка 7", id: bms1_cell_7 }
     cell_voltage_8: { name: "🪫 [АКБ 1] Комірка 8", id: bms1_cell_8 }
 
-  # ================= БАТАРЕЯ 2 (Зелена батарейка) =================
+  # ================= БАТАРЕЯ 2 =================
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_2
 
@@ -170,3 +181,37 @@ sensor:
     cell_voltage_6: { name: "🔋 [АКБ 2] Комірка 6", id: bms2_cell_6 }
     cell_voltage_7: { name: "🔋 [АКБ 2] Комірка 7", id: bms2_cell_7 }
     cell_voltage_8: { name: "🔋 [АКБ 2] Комірка 8", id: bms2_cell_8 }
+
+# Періодична відправка загального JSON по кожній батареї окремим таймером
+interval:
+  - interval: 10s
+    then:
+      - mqtt.publish_json:
+          topic: "jkbms_ta2/battery/1/json"
+          payload: |-
+            root["voltage"] = id(bms1_total_voltage).state;
+            root["current"] = id(bms1_current).state;
+            root["power"] = id(bms1_power).state;
+            root["soc"] = id(bms1_soc).state;
+            root["capacity_remaining"] = id(bms1_capacity_remaining).state;
+            root["min_cell"] = id(bms1_min_cell).state;
+            root["max_cell"] = id(bms1_max_cell).state;
+            root["delta"] = id(bms1_delta).state;
+            root["charging"] = id(bms1_chg_sw).state;
+            root["discharging"] = id(bms1_dsg_sw).state;
+            root["balancer"] = id(bms1_bal_sw).state;
+
+      - mqtt.publish_json:
+          topic: "jkbms_ta2/battery/2/json"
+          payload: |-
+            root["voltage"] = id(bms2_total_voltage).state;
+            root["current"] = id(bms2_current).state;
+            root["power"] = id(bms2_power).state;
+            root["soc"] = id(bms2_soc).state;
+            root["capacity_remaining"] = id(bms2_capacity_remaining).state;
+            root["min_cell"] = id(bms2_min_cell).state;
+            root["max_cell"] = id(bms2_max_cell).state;
+            root["delta"] = id(bms2_delta).state;
+            root["charging"] = id(bms2_chg_sw).state;
+            root["discharging"] = id(bms2_dsg_sw).state;
+            root["balancer"] = id(bms2_bal_sw).state;
