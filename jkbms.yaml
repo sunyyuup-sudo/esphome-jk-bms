@@ -11,14 +11,12 @@ wifi:
   ssid: "Ta2"
   password: "09122004"
 
-# Залишаємо локальний веб-сервер як резервний канал
 web_server:
   port: 80
+  version: 3
 
-# Локальний API для можливих інтеграцій
 api:
 
-# Інтеграція з MQTT для мобільного додатка MQTT Dash
 mqtt:
   broker: broker.hivemq.com
   port: 1883
@@ -26,7 +24,6 @@ mqtt:
 
 esp32_ble_tracker:
 
-# Реєструємо дві плати BMS за їхніми MAC-адресами
 ble_client:
   - mac_address: "98:DA:F0:0A:E9:85"
     id: jkbms_ble_client_1
@@ -36,136 +33,113 @@ ble_client:
 external_components:
   - source: github://syssi/esphome-jk-bms@main
 
-# Ініціалізація першої BMS
 jk_bms_ble:
   - ble_client_id: jkbms_ble_client_1
     id: jkbms_dev_1
     protocol_version: JK02_32S
 
-# Ініціалізація другої BMS
   - ble_client_id: jkbms_ble_client_2
     id: jkbms_dev_2
     protocol_version: JK02_32S
 
-# Перемикачі керування для обох плат
 switch:
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_1
     charging:
-      name: "BMS 1 - Керування зарядом"
+      name: "🪫 [АКБ 1] Заряд"
     discharging:
-      name: "BMS 1 - Керування розрядом"
+      name: "🪫 [АКБ 1] Розряд"
     balancer:
-      name: "BMS 1 - Балансувальник"
+      name: "🪫 [АКБ 1] Балансир"
 
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_2
     charging:
-      name: "BMS 2 - Керування зарядом"
+      name: "🔋 [АКБ 2] Заряд"
     discharging:
-      name: "BMS 2 - Керування розрядом"
+      name: "🔋 [АКБ 2] Розряд"
     balancer:
-      name: "BMS 2 - Балансувальник"
+      name: "🔋 [АКБ 2] Балансир"
 
 button:
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_1
     restart:
-      name: "BMS 1 - Перезавантажити"
+      name: "🪫 [АКБ 1] Перезавантажити"
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_2
     restart:
-      name: "BMS 2 - Перезавантажити"
+      name: "🔋 [АКБ 2] Перезавантажити"
 
 sensor:
-  # ================= БАТАРЕЯ 1 =================
+  # ================= БАТАРЕЯ 1 (Червона батарейка) =================
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_1
 
     total_voltage:
-      name: "BMS 1 - Напруга АКБ"
+      name: "🪫 [АКБ 1] Напруга"
     current:
-      name: "BMS 1 - Струм"
+      name: "🪫 [АКБ 1] Струм"
     power:
-      name: "BMS 1 - Потужність"
+      name: "🪫 [АКБ 1] Потужність"
     state_of_charge:
-      name: "BMS 1 - Заряд SOC (%)"
+      name: "🪫 [АКБ 1] SOC (%)"
     capacity_remaining:
-      name: "BMS 1 - Залишкова ємність (Ач)"
-    
+      name: "🪫 [АКБ 1] Залишок (Ач)"
     min_cell_voltage:
-      name: "BMS 1 - Мін. напруга комірки"
+      name: "🪫 [АКБ 1] Мін. комірка"
     max_cell_voltage:
-      name: "BMS 1 - Макс. напруга комірки"
+      name: "🪫 [АКБ 1] Макс. комірка"
     delta_cell_voltage:
-      name: "BMS 1 - Різниця напруг (Дельта)"
-
+      name: "🪫 [АКБ 1] Дельта"
     power_tube_temperature:
-      name: "BMS 1 - Температура MOSFET"
+      name: "🪫 [АКБ 1] MOSFET"
     temperature_sensor_1:
-      name: "BMS 1 - Температура АКБ T1"
+      name: "🪫 [АКБ 1] Термодатчик 1"
     temperature_sensor_2:
-      name: "BMS 1 - Температура АКБ T2"
+      name: "🪫 [АКБ 1] Термодатчик 2"
 
-    cell_voltage_1:
-      name: "BMS 1 - Комірка 1"
-    cell_voltage_2:
-      name: "BMS 1 - Комірка 2"
-    cell_voltage_3:
-      name: "BMS 1 - Комірка 3"
-    cell_voltage_4:
-      name: "BMS 1 - Комірка 4"
-    cell_voltage_5:
-      name: "BMS 1 - Комірка 5"
-    cell_voltage_6:
-      name: "BMS 1 - Комірка 6"
-    cell_voltage_7:
-      name: "BMS 1 - Комірка 7"
-    cell_voltage_8:
-      name: "BMS 1 - Комірка 8"
+    cell_voltage_1: { name: "🪫 [АКБ 1] Комірка 1" }
+    cell_voltage_2: { name: "🪫 [АКБ 1] Комірка 2" }
+    cell_voltage_3: { name: "🪫 [АКБ 1] Комірка 3" }
+    cell_voltage_4: { name: "🪫 [АКБ 1] Комірка 4" }
+    cell_voltage_5: { name: "🪫 [АКБ 1] Комірка 5" }
+    cell_voltage_6: { name: "🪫 [АКБ 1] Комірка 6" }
+    cell_voltage_7: { name: "🪫 [АКБ 1] Комірка 7" }
+    cell_voltage_8: { name: "🪫 [АКБ 1] Комірка 8" }
 
-  # ================= БАТАРЕЯ 2 =================
+  # ================= БАТАРЕЯ 2 (Зелена батарейка) =================
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_2
 
     total_voltage:
-      name: "BMS 2 - Напруга АКБ"
+      name: "🔋 [АКБ 2] Напруга"
     current:
-      name: "BMS 2 - Струм"
+      name: "🔋 [АКБ 2] Струм"
     power:
-      name: "BMS 2 - Потужність"
+      name: "🔋 [АКБ 2] Потужність"
     state_of_charge:
-      name: "BMS 2 - Заряд SOC (%)"
+      name: "🔋 [АКБ 2] SOC (%)"
     capacity_remaining:
-      name: "BMS 2 - Залишкова ємність (Ач)"
-    
+      name: "🔋 [АКБ 2] Залишок (Ач)"
     min_cell_voltage:
-      name: "BMS 2 - Мін. напруга комірки"
+      name: "🔋 [АКБ 2] Мін. комірка"
     max_cell_voltage:
-      name: "BMS 2 - Макс. напруга комірки"
+      name: "🔋 [АКБ 2] Макс. комірка"
     delta_cell_voltage:
-      name: "BMS 2 - Різниця напруг (Дельта)"
-
+      name: "🔋 [АКБ 2] Дельта"
     power_tube_temperature:
-      name: "BMS 2 - Температура MOSFET"
+      name: "🔋 [АКБ 2] MOSFET"
     temperature_sensor_1:
-      name: "BMS 2 - Температура АКБ T1"
+      name: "🔋 [АКБ 2] Термодатчик 1"
     temperature_sensor_2:
-      name: "BMS 2 - Температура АКБ T2"
+      name: "🔋 [АКБ 2] Термодатчик 2"
 
-    cell_voltage_1:
-      name: "BMS 2 - Комірка 1"
-    cell_voltage_2:
-      name: "BMS 2 - Комірка 2"
-    cell_voltage_3:
-      name: "BMS 2 - Комірка 3"
-    cell_voltage_4:
-      name: "BMS 2 - Комірка 4"
-    cell_voltage_5:
-      name: "BMS 2 - Комірка 5"
-    cell_voltage_6:
-      name: "BMS 2 - Комірка 6"
-    cell_voltage_7:
-      name: "BMS 2 - Комірка 7"
-    cell_voltage_8:
-      name: "BMS 2 - Комірка 8"
+    cell_voltage_1: { name: "🔋 [АКБ 2] Комірка 1" }
+    cell_voltage_2: { name: "🔋 [АКБ 2] Комірка 2" }
+    cell_voltage_3: { name: "🔋 [АКБ 2] Комірка 3" }
+    cell_voltage_4: { name: "🔋 [АКБ 2] Комірка 4" }
+    cell_voltage_5: { name: "🔋 [АКБ 2] Комірка 5" }
+    cell_voltage_6: { name: "🔋 [АКБ 2] Комірка 6" }
+    cell_voltage_7: { name: "🔋 [АКБ 2] Комірка 7" }
+    cell_voltage_8: { name: "🔋 [АКБ 2] Комірка 8" }
