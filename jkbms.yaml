@@ -1,3 +1,81 @@
+esphome:
+  name: dual-jkbms-dashboard
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: esp32c3
+  framework:
+    type: esp-idf
+
+wifi:
+  ssid: "Ta2"
+  password: "09122004"
+
+web_server:
+  port: 80
+  version: 3
+
+api:
+
+mqtt:
+  broker: broker.hivemq.com
+  port: 1883
+  topic_prefix: "jkbms_ta2"
+
+esp32_ble_tracker:
+
+ble_client:
+  - mac_address: "98:DA:F0:0A:E9:85"
+    id: jkbms_ble_client_1
+  - mac_address: "A4:C1:38:0F:3A:D5"
+    id: jkbms_ble_client_2
+
+external_components:
+  - source: github://syssi/esphome-jk-bms@main
+
+jk_bms_ble:
+  - ble_client_id: jkbms_ble_client_1
+    id: jkbms_dev_1
+    protocol_version: JK02_32S
+
+  - ble_client_id: jkbms_ble_client_2
+    id: jkbms_dev_2
+    protocol_version: JK02_32S
+
+switch:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_1
+    charging:
+      name: "🪫 [АКБ 1] Заряд"
+    discharging:
+      name: "🪫 [АКБ 1] Розряд"
+    balancer:
+      name: "🪫 [АКБ 1] Балансир"
+
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_2
+    charging:
+      name: "🔋 [АКБ 2] Заряд"
+    discharging:
+      name: "🔋 [АКБ 2] Розряд"
+    balancer:
+      name: "🔋 [АКБ 2] Балансир"
+
+button:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_1
+    restart:
+      name: "🪫 [АКБ 1] Перезавантажити"
+    shutdown:
+      name: "🪫 [АКБ 1] Вимкнути (Сон)"
+
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_2
+    restart:
+      name: "🔋 [АКБ 2] Перезавантажити"
+    shutdown:
+      name: "🔋 [АКБ 2] Вимкнути (Сон)"
+
 sensor:
   # ================= БАТАРЕЯ 1 (Червона батарейка) =================
   - platform: jk_bms_ble
