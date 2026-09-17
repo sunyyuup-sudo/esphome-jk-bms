@@ -1,3 +1,257 @@
+esphome:
+  name: dual-jkbms-dashboard
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: esp32c3
+  framework:
+    type: esp-idf
+
+wifi:
+  ssid: "Ta2"
+  password: "09122004"
+
+web_server:
+  port: 80
+  version: 3
+
+api:
+
+logger:
+  level: WARN
+  logs:
+    esp32_ble_tracker: WARN
+    ble_client: WARN
+    jk_bms_ble: WARN
+    mqtt: WARN
+    wifi: WARN
+
+mqtt:
+  broker: broker.hivemq.com
+  port: 1883
+  topic_prefix: "jkbms_ta2"
+  on_message:
+    - topic: "jkbms_ta2/command/#"
+      then:
+        - logger.log: "Отримано MQTT команду"
+
+    # ================= Bat 40 Commands =================
+    - topic: "jkbms_ta2/command/bat40/charging"
+      then:
+        - if:
+            condition:
+              lambda: 'return x == "ON";'
+            then:
+              - switch.turn_on: bms1_chg_sw
+            else:
+              - switch.turn_off: bms1_chg_sw
+
+    - topic: "jkbms_ta2/command/bat40/discharging"
+      then:
+        - if:
+            condition:
+              lambda: 'return x == "ON";'
+            then:
+              - switch.turn_on: bms1_dsg_sw
+            else:
+              - switch.turn_off: bms1_dsg_sw
+
+    - topic: "jkbms_ta2/command/bat40/balancer"
+      then:
+        - if:
+            condition:
+              lambda: 'return x == "ON";'
+            then:
+              - switch.turn_on: bms1_bal_sw
+            else:
+              - switch.turn_off: bms1_bal_sw
+
+    # ================= Bat 100 Commands =================
+    - topic: "jkbms_ta2/command/bat100/charging"
+      then:
+        - if:
+            condition:
+              lambda: 'return x == "ON";'
+            then:
+              - switch.turn_on: bms2_chg_sw
+            else:
+              - switch.turn_off: bms2_chg_sw
+
+    - topic: "jkbms_ta2/command/bat100/discharging"
+      then:
+        - if:
+            condition:
+              lambda: 'return x == "ON";'
+            then:
+              - switch.turn_on: bms2_dsg_sw
+            else:
+              - switch.turn_off: bms2_dsg_sw
+
+    - topic: "jkbms_ta2/command/bat100/balancer"
+      then:
+        - if:
+            condition:
+              lambda: 'return x == "ON";'
+            then:
+              - switch.turn_on: bms2_bal_sw
+            else:
+              - switch.turn_off: bms2_bal_sw
+
+esp32_ble_tracker:
+
+ble_client:
+  - mac_address: "98:DA:F0:0A:E9:85"
+    id: jkbms_ble_client_1
+  - mac_address: "A4:C1:38:0F:3A:D5"
+    id: jkbms_ble_client_2
+
+external_components:
+  - source: github://syssi/esphome-jk-bms@main
+
+jk_bms_ble:
+  - ble_client_id: jkbms_ble_client_1
+    id: jkbms_dev_1
+    protocol_version: JK02_32S
+
+  - ble_client_id: jkbms_ble_client_2
+    id: jkbms_dev_2
+    protocol_version: JK02_32S
+
+switch:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_1
+    charging:
+      name: "🪫 [Bat 40] Заряд"
+      id: bms1_chg_sw
+    discharging:
+      name: "🪫 [Bat 40] Розряд"
+      id: bms1_dsg_sw
+    balancer:
+      name: "🪫 [Bat 40] Балансир"
+      id: bms1_bal_sw
+
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_2
+    charging:
+      name: "🔋 [Bat 100] Заряд"
+      id: bms2_chg_sw
+    discharging:
+      name: "🔋 [Bat 100] Розряд"
+      id: bms2_dsg_sw
+    balancer:
+      name: "🔋 [Bat 100] Балансир"
+      id: bms2_bal_sw
+
+button:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_1
+    restart:
+      name: "🪫 [Bat 40] Перезавантажити"
+    shutdown:
+      name: "🪫 [Bat 40] Вимкнути (Сон)"
+
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_2
+    restart:
+      name: "🔋 [Bat 100] Перезавантажити"
+    shutdown:
+      name: "🔋 [Bat 100] Вимкнути (Сон)"
+
+sensor:
+  # ================= Bat 40 =================
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_1
+
+    total_voltage:
+      name: "🪫 [Bat 40] Напруга"
+      id: bms1_total_voltage
+    current:
+      name: "🪫 [Bat 40] Струм"
+      id: bms1_current
+    power:
+      name: "🪫 [Bat 40] Потужність"
+      id: bms1_power
+    state_of_charge:
+      name: "🪫 [Bat 40] SOC (%)"
+      id: bms1_soc
+    capacity_remaining:
+      name: "🪫 [Bat 40] Залишок (Ач)"
+      id: bms1_capacity_remaining
+    min_cell_voltage:
+      name: "🪫 [Bat 40] Мін. комірка A"
+      id: bms1_min_cell
+    max_cell_voltage:
+      name: "🪫 [Bat 40] Макс. комірка B"
+      id: bms1_max_cell
+    delta_cell_voltage:
+      name: "🪫 [Bat 40] Дельта C"
+      id: bms1_delta
+    mosfet_temperature:
+      name: "🪫 [Bat 40] MOSFET M"
+      id: bms1_mosfet_temp
+    temperature_sensor_1:
+      name: "🪫 [Bat 40] Термодатчик 1"
+      id: bms1_temp_1
+    temperature_sensor_2:
+      name: "🪫 [Bat 40] Термодатчик 2"
+      id: bms1_temp_2
+
+    cell_voltage_1: { name: "🪫 [Bat 40] Комірка 1", id: bms1_cell_1 }
+    cell_voltage_2: { name: "🪫 [Bat 40] Комірка 2", id: bms1_cell_2 }
+    cell_voltage_3: { name: "🪫 [Bat 40] Комірка 3", id: bms1_cell_3 }
+    cell_voltage_4: { name: "🪫 [Bat 40] Комірка 4", id: bms1_cell_4 }
+    cell_voltage_5: { name: "🪫 [Bat 40] Комірка 5", id: bms1_cell_5 }
+    cell_voltage_6: { name: "🪫 [Bat 40] Комірка 6", id: bms1_cell_6 }
+    cell_voltage_7: { name: "🪫 [Bat 40] Комірка 7", id: bms1_cell_7 }
+    cell_voltage_8: { name: "🪫 [Bat 40] Комірка 8", id: bms1_cell_8 }
+
+  # ================= Bat 100 =================
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_2
+
+    total_voltage:
+      name: "🔋 [Bat 100] Напруга"
+      id: bms2_total_voltage
+    current:
+      name: "🔋 [Bat 100] Струм"
+      id: bms2_current
+    power:
+      name: "🔋 [Bat 100] Потужність"
+      id: bms2_power
+    state_of_charge:
+      name: "🔋 [Bat 100] SOC (%)"
+      id: bms2_soc
+    capacity_remaining:
+      name: "🔋 [Bat 100] Залишок (Ач)"
+      id: bms2_capacity_remaining
+    min_cell_voltage:
+      name: "🔋 [Bat 100] Мін. комірка A"
+      id: bms2_min_cell
+    max_cell_voltage:
+      name: "🔋 [Bat 100] Макс. комірка B"
+      id: bms2_max_cell
+    delta_cell_voltage:
+      name: "🔋 [Bat 100] Дельта C"
+      id: bms2_delta
+    mosfet_temperature:
+      name: "🔋 [Bat 100] MOSFET M"
+      id: bms2_mosfet_temp
+    temperature_sensor_1:
+      name: "🔋 [Bat 100] Термодатчик 1"
+      id: bms2_temp_1
+    temperature_sensor_2:
+      name: "🔋 [Bat 100] Термодатчик 2"
+      id: bms2_temp_2
+
+    cell_voltage_1: { name: "🔋 [Bat 100] Комірка 1", id: bms2_cell_1 }
+    cell_voltage_2: { name: "🔋 [Bat 100] Комірка 2", id: bms2_cell_2 }
+    cell_voltage_3: { name: "🔋 [Bat 100] Комірка 3", id: bms2_cell_3 }
+    cell_voltage_4: { name: "🔋 [Bat 100] Комірка 4", id: bms2_cell_4 }
+    cell_voltage_5: { name: "🔋 [Bat 100] Комірка 5", id: bms2_cell_5 }
+    cell_voltage_6: { name: "🔋 [Bat 100] Комірка 6", id: bms2_cell_6 }
+    cell_voltage_7: { name: "🔋 [Bat 100] Комірка 7", id: bms2_cell_7 }
+    cell_voltage_8: { name: "🔋 [Bat 100] Комірка 8", id: bms2_cell_8 }
+
 interval:
   - interval: 10s
     then:
