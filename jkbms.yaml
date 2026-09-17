@@ -1,76 +1,3 @@
-esphome:
-  name: dual-jkbms-dashboard
-
-esp32:
-  board: esp32-c3-devkitm-1
-  variant: esp32c3
-  framework:
-    type: esp-idf
-
-wifi:
-  ssid: "Ta2"
-  password: "09122004"
-
-web_server:
-  port: 80
-  version: 3
-
-api:
-
-mqtt:
-  broker: broker.hivemq.com
-  port: 1883
-  topic_prefix: "jkbms_ta2"
-
-esp32_ble_tracker:
-
-ble_client:
-  - mac_address: "98:DA:F0:0A:E9:85"
-    id: jkbms_ble_client_1
-  - mac_address: "A4:C1:38:0F:3A:D5"
-    id: jkbms_ble_client_2
-
-external_components:
-  - source: github://syssi/esphome-jk-bms@main
-
-jk_bms_ble:
-  - ble_client_id: jkbms_ble_client_1
-    id: jkbms_dev_1
-    protocol_version: JK02_32S
-
-  - ble_client_id: jkbms_ble_client_2
-    id: jkbms_dev_2
-    protocol_version: JK02_32S
-
-switch:
-  - platform: jk_bms_ble
-    jk_bms_ble_id: jkbms_dev_1
-    charging:
-      name: "🪫 [АКБ 1] Заряд"
-    discharging:
-      name: "🪫 [АКБ 1] Розряд"
-    balancer:
-      name: "🪫 [АКБ 1] Балансир"
-
-  - platform: jk_bms_ble
-    jk_bms_ble_id: jkbms_dev_2
-    charging:
-      name: "🔋 [АКБ 2] Заряд"
-    discharging:
-      name: "🔋 [АКБ 2] Розряд"
-    balancer:
-      name: "🔋 [АКБ 2] Балансир"
-
-button:
-  - platform: jk_bms_ble
-    jk_bms_ble_id: jkbms_dev_1
-    restart:
-      name: "🪫 [АКБ 1] Перезавантажити"
-  - platform: jk_bms_ble
-    jk_bms_ble_id: jkbms_dev_2
-    restart:
-      name: "🔋 [АКБ 2] Перезавантажити"
-
 sensor:
   # ================= БАТАРЕЯ 1 (Червона батарейка) =================
   - platform: jk_bms_ble
@@ -92,16 +19,16 @@ sensor:
       name: "🪫 [АКБ 1] Залишок (Ач)"
       id: bms1_capacity_remaining
     min_cell_voltage:
-      name: "🪫 [АКБ 1] Мін. комірка"
+      name: "🪫 [АКБ 1] Мін. комірка A"
       id: bms1_min_cell
     max_cell_voltage:
-      name: "🪫 [АКБ 1] Макс. комірка"
+      name: "🪫 [АКБ 1] Макс. комірка B"
       id: bms1_max_cell
     delta_cell_voltage:
-      name: "🪫 [АКБ 1] Дельта"
+      name: "🪫 [АКБ 1] Дельта C"
       id: bms1_delta
     mosfet_temperature:
-      name: "🪫 [АКБ 1] MOSFET"
+      name: "🪫 [АКБ 1] MOSFET M"
       id: bms1_mosfet_temp
     temperature_sensor_1:
       name: "🪫 [АКБ 1] Термодатчик 1"
@@ -139,16 +66,16 @@ sensor:
       name: "🔋 [АКБ 2] Залишок (Ач)"
       id: bms2_capacity_remaining
     min_cell_voltage:
-      name: "🔋 [АКБ 2] Мін. комірка"
+      name: "🔋 [АКБ 2] Мін. комірка A"
       id: bms2_min_cell
     max_cell_voltage:
-      name: "🔋 [АКБ 2] Макс. комірка"
+      name: "🔋 [АКБ 2] Макс. комірка B"
       id: bms2_max_cell
     delta_cell_voltage:
-      name: "🔋 [АКБ 2] Дельта"
+      name: "🔋 [АКБ 2] Дельта C"
       id: bms2_delta
     mosfet_temperature:
-      name: "🔋 [АКБ 2] MOSFET"
+      name: "🔋 [АКБ 2] MOSFET M"
       id: bms2_mosfet_temp
     temperature_sensor_1:
       name: "🔋 [АКБ 2] Термодатчик 1"
