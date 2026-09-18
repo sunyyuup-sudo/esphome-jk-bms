@@ -4,7 +4,7 @@ esphome:
 
 external_components:
   - source: github://syssi/esphome-jk-bms
-    components: [ jkbms ]
+    components: [ jk_bms_ble ]
 
 esp32:
   board: esp32-c3-devkitm-1
@@ -20,7 +20,7 @@ logger:
   logs:
     esp32_ble: ERROR
     ble_client: ERROR
-    jkbms: WARN
+    jk_bms_ble: WARN
     mqtt: WARN
 
 api:
@@ -32,118 +32,116 @@ esp32_ble:
 
 ble_client:
   - mac_address: "98:DA:F0:0A:E9:85"
-    id: jkbms_dev_1
+    id: bms_dev_1
   - mac_address: "A4:C1:38:0F:3A:D5"
-    id: jkbms_dev_2
-
-jkbms:
-  - ble_client_id: jkbms_dev_1
-    id: my_jkbms_1
-    update_interval: 5s
-  - ble_client_id: jkbms_dev_2
-    id: my_jkbms_2
-    update_interval: 5s
+    id: bms_dev_2
 
 sensor:
-  # ================= 40 (bms1) =================
-  - platform: jkbms
-    jkbms_id: my_jkbms_1
+  # ================= АКУМУЛЯТОР 40 =================
+  - platform: jk_bms_ble
+    ble_client_id: bms_dev_1
+    device:
+      name: "АКБ 40"
+      serial_number: "JK-BMS-40"
     total_voltage:
-      name: "4️⃣0️⃣ Напруга"
+      name: "Напруга"
       id: bms1_total_voltage
     current:
-      name: "4️⃣0️⃣ Струм"
+      name: "Струм"
       id: bms1_current
     power:
-      name: "4️⃣0️⃣ Потужність"
+      name: "Потужність"
       id: bms1_power
-    soc:
-      name: "4️⃣0️⃣ SOC"
+    capacity_sos:
+      name: "SOC"
       id: bms1_soc
     capacity_remaining:
-      name: "4️⃣0️⃣ Залишок"
+      name: "Залишок"
       id: bms1_capacity_remaining
     delta_cell_voltage:
-      name: "4️⃣0️⃣ Дельта"
+      name: "Дельта"
       id: bms1_delta
     min_cell_voltage:
-      name: "4️⃣0️⃣ Мін. комірка"
+      name: "Мін. комірка"
     max_cell_voltage:
-      name: "4️⃣0️⃣ Макс. комірка"
-    charging_power_tube_temperature:
-      name: "4️⃣0️⃣ MOSFET M"
+      name: "Макс. комірка"
+    mosfet_temperature:
+      name: "MOSFET M"
     temperature_1:
-      name: "4️⃣0️⃣ Термодатчик 1"
+      name: "Термодатчик 1"
     temperature_2:
-      name: "4️⃣0️⃣ Термодатчик 2"
+      name: "Термодатчик 2"
     cell_1_voltage:
-      name: "4️⃣0️⃣ Комірка 1"
+      name: "Комірка 1"
     cell_2_voltage:
-      name: "4️⃣0️⃣ Комірка 2"
+      name: "Комірка 2"
     cell_3_voltage:
-      name: "4️⃣0️⃣ Комірка 3"
+      name: "Комірка 3"
     cell_4_voltage:
-      name: "4️⃣0️⃣ Комірка 4"
+      name: "Комірка 4"
     cell_5_voltage:
-      name: "4️⃣0️⃣ Комірка 5"
+      name: "Комірка 5"
     cell_6_voltage:
-      name: "4️⃣0️⃣ Комірка 6"
+      name: "Комірка 6"
     cell_7_voltage:
-      name: "4️⃣0️⃣ Комірка 7"
+      name: "Комірка 7"
     cell_8_voltage:
-      name: "4️⃣0️⃣ Комірка 8"
+      name: "Комірка 8"
 
-  # ================= 100 (bms2) =================
-  - platform: jkbms
-    jkbms_id: my_jkbms_2
+  # ================= АКУМУЛЯТОР 100 =================
+  - platform: jk_bms_ble
+    ble_client_id: bms_dev_2
+    device:
+      name: "АКБ 100"
+      serial_number: "JK-BMS-100"
     total_voltage:
-      name: "1️⃣0️⃣0️⃣ Напруга"
+      name: "Напруга"
       id: bms2_total_voltage
     current:
-      name: "1️⃣0️⃣0️⃣ Струм"
+      name: "Струм"
       id: bms2_current
     power:
-      name: "1️⃣0️⃣0️⃣ Потужність"
+      name: "Потужність"
       id: bms2_power
-    soc:
-      name: "1️⃣0️⃣0️⃣ SOC"
+    capacity_sos:
+      name: "SOC"
       id: bms2_soc
     capacity_remaining:
-      name: "1️⃣0️⃣0️⃣ Залишок"
+      name: "Залишок"
       id: bms2_capacity_remaining
     delta_cell_voltage:
-      name: "1️⃣0️⃣0️⃣ Дельта"
+      name: "Дельта"
       id: bms2_delta
     min_cell_voltage:
-      name: "1️⃣0️⃣0️⃣ Мін. комірка"
+      name: "Мін. комірка"
     max_cell_voltage:
-      name: "1️⃣0️⃣0️⃣ Макс. комірка"
-    charging_power_tube_temperature:
-      name: "1️⃣0️⃣0️⃣ MOSFET M"
+      name: "Макс. комірка"
+    mosfet_temperature:
+      name: "MOSFET M"
     temperature_1:
-      name: "1️⃣0️⃣0️⃣ Термодатчик 1"
+      name: "Термодатчик 1"
     temperature_2:
-      name: "1️⃣0️⃣0️⃣ Термодатчик 2"
+      name: "Термодатчик 2"
     cell_1_voltage:
-      name: "1️⃣0️⃣0️⃣ Комірка 1"
+      name: "Комірка 1"
     cell_2_voltage:
-      name: "1️⃣0️⃣0️⃣ Комірка 2"
+      name: "Комірка 2"
     cell_3_voltage:
-      name: "1️⃣0️⃣0️⃣ Комірка 3"
+      name: "Комірка 3"
     cell_4_voltage:
-      name: "1️⃣0️⃣0️⃣ Комірка 4"
+      name: "Комірка 4"
     cell_5_voltage:
-      name: "1️⃣0️⃣0️⃣ Комірка 5"
+      name: "Комірка 5"
     cell_6_voltage:
-      name: "1️⃣0️⃣0️⃣ Комірка 6"
+      name: "Комірка 6"
     cell_7_voltage:
-      name: "1️⃣0️⃣0️⃣ Комірка 7"
+      name: "Комірка 7"
     cell_8_voltage:
-      name: "1️⃣0️⃣0️⃣ Комірка 8"
+      name: "Комірка 8"
 
 text_sensor:
   - platform: template
-    name: "4️⃣0️⃣ Рівень заряду"
+    name: "АКБ 40 - Рівень заряду"
     id: bms1_status_icon
     lambda: |-
       float soc = id(bms1_soc).state;
@@ -161,7 +159,7 @@ text_sensor:
     update_interval: 10s
 
   - platform: template
-    name: "1️⃣0️⃣0️⃣ Рівень заряду"
+    name: "АКБ 100 - Рівень заряду"
     id: bms2_status_icon
     lambda: |-
       float soc = id(bms2_soc).state;
@@ -179,44 +177,44 @@ text_sensor:
     update_interval: 10s
 
 switch:
-  - platform: jkbms
-    jkbms_id: my_jkbms_1
+  - platform: jk_bms_ble
+    ble_client_id: bms_dev_1
     charging:
-      name: "⚡4️⃣0️⃣ Заряд"
+      name: "АКБ 40 - Заряд"
       id: bms1_charging_switch
     discharging:
-      name: "⚡4️⃣0️⃣ Розряд"
+      name: "АКБ 40 - Розряд"
       id: bms1_discharging_switch
-    balancer:
-      name: "⚖️4️⃣0️⃣ Балансир"
+    balancing:
+      name: "АКБ 40 - Балансир"
       id: bms1_balancer_switch
 
-  - platform: jkbms
-    jkbms_id: my_jkbms_2
+  - platform: jk_bms_ble
+    ble_client_id: bms_dev_2
     charging:
-      name: "⚡1️⃣0️⃣0️⃣ Заряд"
+      name: "АКБ 100 - Заряд"
       id: bms2_charging_switch
     discharging:
-      name: "⚡1️⃣0️⃣0️⃣ Розряд"
+      name: "АКБ 100 - Розряд"
       id: bms2_discharging_switch
-    balancer:
-      name: "⚖️1️⃣0️⃣0️⃣ Балансир"
+    balancing:
+      name: "АКБ 100 - Балансир"
       id: bms2_balancer_switch
 
 button:
-  - platform: jkbms
-    jkbms_id: my_jkbms_1
-    shutdown:
-      name: "🌙4️⃣0️⃣ Вимкнути (Сон)"
+  - platform: jk_bms_ble
+    ble_client_id: bms_dev_1
+    sleep:
+      name: "АКБ 40 - Вимкнути (Сон)"
     reset:
-      name: "💫4️⃣0️⃣ Перезавантажити"
+      name: "АКБ 40 - Перезавантажити"
 
-  - platform: jkbms
-    jkbms_id: my_jkbms_2
-    shutdown:
-      name: "🌙1️⃣0️⃣0️⃣ Вимкнути (Сон)"
+  - platform: jk_bms_ble
+    ble_client_id: bms_dev_2
+    sleep:
+      name: "АКБ 100 - Вимкнути (Сон)"
     reset:
-      name: "💫1️⃣0️⃣0️⃣ Перезавантажити"
+      name: "АКБ 100 - Перезавантажити"
 
 mqtt:
   broker: broker.hivemq.com
