@@ -68,30 +68,43 @@ sensor:
       id: bms1_delta
     min_cell_voltage:
       name: "АКБ 40 Мін комірка"
+      id: bms1_min_cell
     max_cell_voltage:
       name: "АКБ 40 Макс комірка"
+      id: bms1_max_cell
     mosfet_temperature:
       name: "АКБ 40 MOSFET M"
+      id: bms1_mosfet_temp
     temperature_sensor_1:
       name: "АКБ 40 Термодатчик 1"
+      id: bms1_temp_1
     temperature_sensor_2:
       name: "АКБ 40 Термодатчик 2"
+      id: bms1_temp_2
     cell_voltage_1:
       name: "АКБ 40 Комірка 1"
+      id: bms1_c1
     cell_voltage_2:
       name: "АКБ 40 Комірка 2"
+      id: bms1_c2
     cell_voltage_3:
       name: "АКБ 40 Комірка 3"
+      id: bms1_c3
     cell_voltage_4:
       name: "АКБ 40 Комірка 4"
+      id: bms1_c4
     cell_voltage_5:
       name: "АКБ 40 Комірка 5"
+      id: bms1_c5
     cell_voltage_6:
       name: "АКБ 40 Комірка 6"
+      id: bms1_c6
     cell_voltage_7:
       name: "АКБ 40 Комірка 7"
+      id: bms1_c7
     cell_voltage_8:
       name: "АКБ 40 Комірка 8"
+      id: bms1_c8
 
   # ================= АКУМУЛЯТОР 100 =================
   - platform: jk_bms_ble
@@ -113,30 +126,43 @@ sensor:
       id: bms2_delta
     min_cell_voltage:
       name: "АКБ 100 Мін комірка"
+      id: bms2_min_cell
     max_cell_voltage:
       name: "АКБ 100 Макс комірка"
+      id: bms2_max_cell
     mosfet_temperature:
       name: "АКБ 100 MOSFET M"
+      id: bms2_mosfet_temp
     temperature_sensor_1:
       name: "АКБ 100 Термодатчик 1"
+      id: bms2_temp_1
     temperature_sensor_2:
       name: "АКБ 100 Термодатчик 2"
+      id: bms2_temp_2
     cell_voltage_1:
       name: "АКБ 100 Комірка 1"
+      id: bms2_c1
     cell_voltage_2:
       name: "АКБ 100 Комірка 2"
+      id: bms2_c2
     cell_voltage_3:
       name: "АКБ 100 Комірка 3"
+      id: bms2_c3
     cell_voltage_4:
       name: "АКБ 100 Комірка 4"
+      id: bms2_c4
     cell_voltage_5:
       name: "АКБ 100 Комірка 5"
+      id: bms2_c5
     cell_voltage_6:
       name: "АКБ 100 Комірка 6"
+      id: bms2_c6
     cell_voltage_7:
       name: "АКБ 100 Комірка 7"
+      id: bms2_c7
     cell_voltage_8:
       name: "АКБ 100 Комірка 8"
+      id: bms2_c8
 
 text_sensor:
   - platform: template
