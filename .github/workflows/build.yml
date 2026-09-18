@@ -1,6 +1,10 @@
 name: Build ESPHome Firmware
 
-on:
+on: 
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
@@ -16,15 +20,13 @@ jobs:
           python-version: '3.11'
 
       - name: Install ESPHome
-        run: |
-          pip install esphome
+        run: pip install esphome
 
-      - name: Compile ESPHome Binary
-        run: |
-          esphome compile jkbms.yaml
+      - name: Compile firmware
+        run: esphome compile jkbms.yaml
 
-      - name: Upload firmware
-  uses: actions/upload-artifact@v4
-  with:
-    name: firmware
-    path: .esphome/build/bb/firmware.bin
+      - name: Upload firmware binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: .esphome/build/**/firmware.bin
