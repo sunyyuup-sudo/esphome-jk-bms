@@ -22,14 +22,19 @@ jobs:
       - name: Install ESPHome
         run: pip install esphome
 
+      - name: Create dummy secrets.yaml if missing
+        run: |
+          if [ ! -f secrets.yaml ]; then
+            echo "wifi_ssid: 'DummyWiFi'" > secrets.yaml
+            echo "wifi_password: 'DummyPassword'" >> secrets.yaml
+            echo "Created dummy secrets.yaml for CI build"
+          fi
+
       - name: Compile firmware
-        run: esphome -v compile jkbms.yaml
+        run: esphome compile jkbms.yaml
 
-      - name: Find compiled binaries (Debug)
-        run: find . -name "*.bin"
-
-      - name: Upload Firmware Binary
+      - name: Upload firmware binary
         uses: actions/upload-artifact@v4
         with:
-          name: esp32c3-jkbms-firmware
-          path: .esphome/build/dual-jkbms-dashboard/.pioenvs/dual-jkbms-dashboard/firmware.bin
+          name: dual-jkbms-firmware
+          path: .esphome/build/*/.pioenvs/*/firmware.bin
