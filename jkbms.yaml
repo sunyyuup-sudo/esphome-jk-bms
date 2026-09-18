@@ -24,11 +24,6 @@ api:
 ota:
   - platform: esphome
 
-mqtt:
-  broker: broker.hivemq.com
-  port: 1883
-  topic_prefix: "jkbms_ta2"
-
 esp32_ble:
 
 ble_client:
@@ -223,6 +218,9 @@ button:
       name: "💫1️⃣0️⃣0️⃣ Перезавантажити"
 
 mqtt:
+  broker: broker.hivemq.com
+  port: 1883
+  topic_prefix: "jkbms_ta2"
   on_json_message:
     - topic: "jkbms_ta2/command/bat40/charging"
       then:
