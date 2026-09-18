@@ -28,10 +28,8 @@ jobs:
       - name: Find compiled binaries (Debug)
         run: find . -name "*.bin"
 
-      - name: Upload firmware binary
+      - name: Upload Firmware Binary
         uses: actions/upload-artifact@v4
         with:
-          name: firmware
-          path: |
-            **/*.bin
-            !.esphome/platformio/**
+          name: esp32c3-jkbms-firmware
+          path: .esphome/build/dual-jkbms-dashboard/.pioenvs/dual-jkbms-dashboard/firmware.bin
