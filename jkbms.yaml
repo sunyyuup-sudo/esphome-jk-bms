@@ -39,12 +39,12 @@ ble_client:
 jk_bms_ble:
   - ble_client_id: bms_dev_1
     id: my_jkbms_1
-    protocol_version: 0
+    protocol_version: 'JK02_32S'
     update_interval: 5s
 
   - ble_client_id: bms_dev_2
     id: my_jkbms_2
-    protocol_version: 0
+    protocol_version: 'JK02_32S'
     update_interval: 5s
 
 sensor:
@@ -257,7 +257,7 @@ mqtt:
             if (payload.as<std::string>() == "ON") {
               id(bms2_charging_switch).turn_on();
             } else if (payload.as<std::string>() == "OFF") {
-              id(bms2_charging_switch).turn_off();
+              id(bps2_charging_switch).turn_off();
             }
     - topic: "jkbms_ta2/command/bat100/discharging"
       then:
