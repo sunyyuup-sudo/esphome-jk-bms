@@ -50,176 +50,148 @@ jk_bms_ble:
 sensor:
   # ================= АКУМУЛЯТОР 40 =================
   - platform: jk_bms_ble
-    jk_bms_id: my_jkbms_1
+    jk_bms_ble_id: my_jkbms_1
     total_voltage:
-      name: "АКБ 40 - Напруга"
+      name: "АКБ 40 Напруга"
       id: bms1_total_voltage
     current:
-      name: "АКБ 40 - Струм"
+      name: "АКБ 40 Струм"
       id: bms1_current
     power:
-      name: "АКБ 40 - Потужність"
+      name: "АКБ 40 Потужність"
       id: bms1_power
-    soc:
-      name: "АКБ 40 - SOC"
-      id: bms1_soc
     capacity_remaining:
-      name: "АКБ 40 - Залишок"
+      name: "АКБ 40 Залишок"
       id: bms1_capacity_remaining
     delta_cell_voltage:
-      name: "АКБ 40 - Дельта"
+      name: "АКБ 40 Дельта"
       id: bms1_delta
     min_cell_voltage:
-      name: "АКБ 40 - Мін. комірка"
+      name: "АКБ 40 Мін комірка"
     max_cell_voltage:
-      name: "АКБ 40 - Макс. комірка"
+      name: "АКБ 40 Макс комірка"
     mosfet_temperature:
-      name: "АКБ 40 - MOSFET M"
+      name: "АКБ 40 MOSFET M"
     temperature_sensor_1:
-      name: "АКБ 40 - Термодатчик 1"
+      name: "АКБ 40 Термодатчик 1"
     temperature_sensor_2:
-      name: "АКБ 40 - Термодатчик 2"
+      name: "АКБ 40 Термодатчик 2"
     cell_voltage_1:
-      name: "АКБ 40 - Комірка 1"
+      name: "АКБ 40 Комірка 1"
     cell_voltage_2:
-      name: "АКБ 40 - Комірка 2"
+      name: "АКБ 40 Комірка 2"
     cell_voltage_3:
-      name: "АКБ 40 - Комірка 3"
+      name: "АКБ 40 Комірка 3"
     cell_voltage_4:
-      name: "АКБ 40 - Комірка 4"
+      name: "АКБ 40 Комірка 4"
     cell_voltage_5:
-      name: "АКБ 40 - Комірка 5"
+      name: "АКБ 40 Комірка 5"
     cell_voltage_6:
-      name: "АКБ 40 - Комірка 6"
+      name: "АКБ 40 Комірка 6"
     cell_voltage_7:
-      name: "АКБ 40 - Комірка 7"
+      name: "АКБ 40 Комірка 7"
     cell_voltage_8:
-      name: "АКБ 40 - Комірка 8"
+      name: "АКБ 40 Комірка 8"
 
   # ================= АКУМУЛЯТОР 100 =================
   - platform: jk_bms_ble
-    jk_bms_id: my_jkbms_2
+    jk_bms_ble_id: my_jkbms_2
     total_voltage:
-      name: "АКБ 100 - Напруга"
+      name: "АКБ 100 Напруга"
       id: bms2_total_voltage
     current:
-      name: "АКБ 100 - Струм"
+      name: "АКБ 100 Струм"
       id: bms2_current
     power:
-      name: "АКБ 100 - Потужність"
+      name: "АКБ 100 Потужність"
       id: bms2_power
-    soc:
-      name: "АКБ 100 - SOC"
-      id: bms2_soc
     capacity_remaining:
-      name: "АКБ 100 - Залишок"
+      name: "АКБ 100 Залишок"
       id: bms2_capacity_remaining
     delta_cell_voltage:
-      name: "АКБ 100 - Дельта"
+      name: "АКБ 100 Дельта"
       id: bms2_delta
     min_cell_voltage:
-      name: "АКБ 100 - Мін. комірка"
+      name: "АКБ 100 Мін комірка"
     max_cell_voltage:
-      name: "АКБ 100 - Макс. комірка"
+      name: "АКБ 100 Макс комірка"
     mosfet_temperature:
-      name: "АКБ 100 - MOSFET M"
+      name: "АКБ 100 MOSFET M"
     temperature_sensor_1:
-      name: "АКБ 100 - Термодатчик 1"
+      name: "АКБ 100 Термодатчик 1"
     temperature_sensor_2:
-      name: "АКБ 100 - Термодатчик 2"
+      name: "АКБ 100 Термодатчик 2"
     cell_voltage_1:
-      name: "АКБ 100 - Комірка 1"
+      name: "АКБ 100 Комірка 1"
     cell_voltage_2:
-      name: "АКБ 100 - Комірка 2"
+      name: "АКБ 100 Комірка 2"
     cell_voltage_3:
-      name: "АКБ 100 - Комірка 3"
+      name: "АКБ 100 Комірка 3"
     cell_voltage_4:
-      name: "АКБ 100 - Комірка 4"
+      name: "АКБ 100 Комірка 4"
     cell_voltage_5:
-      name: "АКБ 100 - Комірка 5"
+      name: "АКБ 100 Комірка 5"
     cell_voltage_6:
-      name: "АКБ 100 - Комірка 6"
+      name: "АКБ 100 Комірка 6"
     cell_voltage_7:
-      name: "АКБ 100 - Комірка 7"
+      name: "АКБ 100 Комірка 7"
     cell_voltage_8:
-      name: "АКБ 100 - Комірка 8"
+      name: "АКБ 100 Комірка 8"
 
 text_sensor:
   - platform: template
-    name: "АКБ 40 - Рівень заряду"
+    name: "АКБ 40 Рівень заряду"
     id: bms1_status_icon
     lambda: |-
-      float soc = id(bms1_soc).state;
-      if (soc > 80) {
-        return {"🟢  ( >80% )"};
-      } else if (soc > 60) {
-        return {"🔵 ( 61-80% )"};
-      } else if (soc > 40) {
-        return {"🟡 ( 41-60% )"};
-      } else if (soc > 20) {
-        return {"🟠 ( 21-40% )"};
-      } else {
-        return {"🔴 ( <=20% )"};
-      }
+      return {"🟢"};
     update_interval: 10s
 
   - platform: template
-    name: "АКБ 100 - Рівень заряду"
+    name: "АКБ 100 Рівень заряду"
     id: bms2_status_icon
     lambda: |-
-      float soc = id(bms2_soc).state;
-      if (soc > 80) {
-        return {"🟢  ( >80% )"};
-      } else if (soc > 60) {
-        return {"🔵 ( 61-80% )"};
-      } else if (soc > 40) {
-        return {"🟡 ( 41-60% )"};
-      } else if (soc > 20) {
-        return {"🟠 ( 21-40% )"};
-      } else {
-        return {"🔴 ( <=20% )"};
-      }
+      return {"🟢"};
     update_interval: 10s
 
 switch:
   - platform: jk_bms_ble
-    jk_bms_id: my_jkbms_1
+    jk_bms_ble_id: my_jkbms_1
     charging:
-      name: "АКБ 40 - Заряд"
+      name: "АКБ 40 Заряд"
       id: bms1_charging_switch
     discharging:
-      name: "АКБ 40 - Розряд"
+      name: "АКБ 40 Розряд"
       id: bms1_discharging_switch
     balancing:
-      name: "АКБ 40 - Балансир"
+      name: "АКБ 40 Балансир"
       id: bms1_balancer_switch
 
   - platform: jk_bms_ble
-    jk_bms_id: my_jkbms_2
+    jk_bms_ble_id: my_jkbms_2
     charging:
-      name: "АКБ 100 - Заряд"
+      name: "АКБ 100 Заряд"
       id: bms2_charging_switch
     discharging:
-      name: "АКБ 100 - Розряд"
+      name: "АКБ 100 Розряд"
       id: bms2_discharging_switch
     balancing:
-      name: "АКБ 100 - Балансир"
+      name: "АКБ 100 Балансир"
       id: bms2_balancer_switch
 
 button:
   - platform: jk_bms_ble
-    jk_bms_id: my_jkbms_1
+    jk_bms_ble_id: my_jkbms_1
     sleep:
-      name: "АКБ 40 - Вимкнути (Сон)"
+      name: "АКБ 40 Сон"
     reset:
-      name: "АКБ 40 - Перезавантажити"
+      name: "АКБ 40 Перезавантажити"
 
   - platform: jk_bms_ble
-    jk_bms_id: my_jkbms_2
+    jk_bms_ble_id: my_jkbms_2
     sleep:
-      name: "АКБ 100 - Вимкнути (Сон)"
+      name: "АКБ 100 Сон"
     reset:
-      name: "АКБ 100 - Перезавантажити"
+      name: "АКБ 100 Перезавантажити"
 
 mqtt:
   broker: broker.hivemq.com
@@ -257,7 +229,7 @@ mqtt:
             if (payload.as<std::string>() == "ON") {
               id(bms2_charging_switch).turn_on();
             } else if (payload.as<std::string>() == "OFF") {
-              id(bps2_charging_switch).turn_off();
+              id(bms2_charging_switch).turn_off();
             }
     - topic: "jkbms_ta2/command/bat100/discharging"
       then:
