@@ -2,6 +2,10 @@ esphome:
   name: dual-jkibms-dashboard
   friendly_name: Акумулятори
 
+external_components:
+  - source: github://syssi/esphome-jk-bms
+    components: [ jkbms ]
+
 esp32:
   board: esp32-c3-devkitm-1
   framework:
@@ -9,7 +13,7 @@ esp32:
 
 wifi:
   ssid: "Ta2"
-  password: "09122004"
+  password: "ВАШ_ПАРОЛЬ_ВІД_WIFI"
 
 logger:
   level: WARN
@@ -138,7 +142,6 @@ sensor:
       name: "1️⃣0️⃣0️⃣ Комірка 8"
 
 text_sensor:
-  # Динамічні індикатори заряду для обох батарей
   - platform: template
     name: "4️⃣0️⃣ Рівень заряду"
     id: bms1_status_icon
@@ -176,7 +179,6 @@ text_sensor:
     update_interval: 10s
 
 switch:
-  # ================= 40 вимикачі =================
   - platform: jkbms
     jkbms_id: my_jkbms_1
     charging:
@@ -189,7 +191,6 @@ switch:
       name: "⚖️4️⃣0️⃣ Балансир"
       id: bms1_balancer_switch
 
-  # ================= 100 вимикачі =================
   - platform: jkbms
     jkbms_id: my_jkbms_2
     charging:
