@@ -23,7 +23,7 @@ jobs:
         run: pip install esphome
 
       - name: Compile firmware
-        run: esphome compile jkbms.yaml
+        run: esphome -v compile jkbms.yaml
 
       - name: Find compiled binaries (Debug)
         run: find . -name "*.bin"
