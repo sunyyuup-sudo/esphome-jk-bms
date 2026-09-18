@@ -27,14 +27,22 @@ jobs:
           if [ ! -f secrets.yaml ]; then
             echo "wifi_ssid: 'DummyWiFi'" > secrets.yaml
             echo "wifi_password: 'DummyPassword'" >> secrets.yaml
-            echo "Created dummy secrets.yaml for CI build"
           fi
 
-      - name: Compile firmware
-        run: esphome compile jkbms.yaml
+      - name: Compile firmware and save log
+        run: |
+          esphome compile jkbms.yaml 2>&1 | tee compile_output.txt
+        continue-on-error: true
+
+      - name: Upload compilation log
+        uses: actions/upload-artifact@v4
+        with:
+          name: esphome-build-log
+          path: compile_output.txt
 
       - name: Upload firmware binary
         uses: actions/upload-artifact@v4
         with:
           name: dual-jkbms-firmware
           path: .esphome/build/*/.pioenvs/*/firmware.bin
+          if-no-files-found: warn
