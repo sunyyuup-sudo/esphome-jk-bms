@@ -166,16 +166,12 @@ switch:
 button:
   - platform: jk_bms_ble
     jk_bms_ble_id: my_jkbms_1
-    sleep:
-      name: "BAT 40 Sleep"
-    reset:
+    restart:
       name: "BAT 40 Reset"
 
   - platform: jk_bms_ble
     jk_bms_ble_id: my_jkbms_2
-    sleep:
-      name: "BAT 100 Sleep"
-    reset:
+    restart:
       name: "BAT 100 Reset"
 
 mqtt:
