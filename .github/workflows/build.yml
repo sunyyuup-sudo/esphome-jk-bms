@@ -25,8 +25,13 @@ jobs:
       - name: Compile firmware
         run: esphome compile jkbms.yaml
 
+      - name: Find compiled binaries (Debug)
+        run: find . -name "*.bin"
+
       - name: Upload firmware binary
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: .esphome/build/**/firmware.bin
+          path: |
+            **/*.bin
+            !.esphome/platformio/**
