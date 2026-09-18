@@ -1,3 +1,52 @@
+esphome:
+  name: dual-jkibms-dashboard
+  friendly_name: Акумулятори
+
+external_components:
+  - source: github://syssi/esphome-jk-bms
+    components: [ jk_bms_ble ]
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+wifi:
+  ssid: "Ta2"
+  password: "09122004"
+
+logger:
+  level: WARN
+  logs:
+    esp32_ble: ERROR
+    ble_client: ERROR
+    jk_bms_ble: WARN
+    mqtt: WARN
+
+api:
+
+ota:
+  - platform: esphome
+
+esp32_ble:
+
+ble_client:
+  - mac_address: "98:DA:F0:0A:E9:85"
+    id: bms_dev_1
+  - mac_address: "A4:C1:38:0F:3A:D5"
+    id: bms_dev_2
+
+jk_bms_ble:
+  - ble_client_id: bms_dev_1
+    id: my_jkbms_1
+    protocol_version: 'JK02_32S'
+    update_interval: 5s
+
+  - ble_client_id: bms_dev_2
+    id: my_jkbms_2
+    protocol_version: 'JK02_32S'
+    update_interval: 5s
+
 sensor:
   # ================= АКУМУЛЯТОР 40 =================
   - platform: jk_bms_ble
@@ -114,3 +163,113 @@ sensor:
     cell_voltage_8:
       name: "АКБ 100 Комірка 8"
       id: bms2_c8_v8
+
+text_sensor:
+  - platform: template
+    name: "АКБ 40 Рівень заряду"
+    id: bms1_status_icon
+    lambda: |-
+      return {"🟢"};
+    update_interval: 10s
+
+  - platform: template
+    name: "АКБ 100 Рівень заряду"
+    id: bms2_status_icon
+    lambda: |-
+      return {"🟢"};
+    update_interval: 10s
+
+switch:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: my_jkbms_1
+    charging:
+      name: "АКБ 40 Заряд"
+      id: bms1_charging_switch
+    discharging:
+      name: "АКБ 40 Розряд"
+      id: bms1_discharging_switch
+    balancing:
+      name: "АКБ 40 Балансир"
+      id: bms1_balancer_switch
+
+  - platform: jk_bms_ble
+    jk_bms_ble_id: my_jkbms_2
+    charging:
+      name: "АКБ 100 Заряд"
+      id: bms2_charging_switch
+    discharging:
+      name: "АКБ 100 Розряд"
+      id: bms2_discharging_switch
+    balancing:
+      name: "АКБ 100 Балансир"
+      id: bms2_balancer_switch
+
+button:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: my_jkbms_1
+    sleep:
+      name: "АКБ 40 Сон"
+    reset:
+      name: "АКБ 40 Перезавантажити"
+
+  - platform: jk_bms_ble
+    jk_bms_ble_id: my_jkbms_2
+    sleep:
+      name: "АКБ 100 Сон"
+    reset:
+      name: "АКБ 100 Перезавантажити"
+
+mqtt:
+  broker: broker.hivemq.com
+  port: 1883
+  topic_prefix: "jkbms_ta2"
+  on_json_message:
+    - topic: "jkbms_ta2/command/bat40/charging"
+      then:
+        - lambda: |-
+            if (payload.as<std::string>() == "ON") {
+              id(bms1_charging_switch).turn_on();
+            } else if (payload.as<std::string>() == "OFF") {
+              id(bms1_charging_switch).turn_off();
+            }
+    - topic: "jkbms_ta2/command/bat40/discharging"
+      then:
+        - lambda: |-
+            if (payload.as<std::string>() == "ON") {
+              id(bms1_discharging_switch).turn_on();
+            } else if (payload.as<std::string>() == "OFF") {
+              id(bms1_discharging_switch).turn_off();
+            }
+    - topic: "jkbms_ta2/command/bat40/balancer"
+      then:
+        - lambda: |-
+            if (payload.as<std::string>() == "ON") {
+              id(bms1_balancer_switch).turn_on();
+            } else if (payload.as<std::string>() == "OFF") {
+              id(bms1_balancer_switch).turn_off();
+            }
+
+    - topic: "jkbms_ta2/command/bat100/charging"
+      then:
+        - lambda: |-
+            if (payload.as<std::string>() == "ON") {
+              id(bms2_charging_switch).turn_on();
+            } else if (payload.as<std::string>() == "OFF") {
+              id(bms2_charging_switch).turn_off();
+            }
+    - topic: "jkbms_ta2/command/bat100/discharging"
+      then:
+        - lambda: |-
+            if (payload.as<std::string>() == "ON") {
+              id(bms2_discharging_switch).turn_on();
+            } else if (payload.as<std::string>() == "OFF") {
+              id(bms2_discharging_switch).turn_off();
+            }
+    - topic: "jkbms_ta2/command/bat100/balancer"
+      then:
+        - lambda: |-
+            if (payload.as<std::string>() == "ON") {
+              id(bms2_balancer_switch).turn_on();
+            } else if (payload.as<std::string>() == "OFF") {
+              id(bms2_balancer_switch).turn_off();
+            }
