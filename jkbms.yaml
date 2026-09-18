@@ -147,7 +147,7 @@ switch:
     discharging:
       name: "BAT 40 Discharge"
       id: bms1_discharging_switch
-    balancing:
+    balancer:
       name: "BAT 40 Balancer"
       id: bms1_balancer_switch
 
@@ -159,7 +159,7 @@ switch:
     discharging:
       name: "BAT 100 Discharge"
       id: bms2_discharging_switch
-    balancing:
+    balancer:
       name: "BAT 100 Balancer"
       id: bms2_balancer_switch
 
