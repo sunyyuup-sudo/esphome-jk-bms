@@ -1,6 +1,7 @@
 esphome:
   name: dual-jkibms-dashboard
   friendly_name: Акумулятори
+  esp32_restore_from_flash: false
 
 external_components:
   - source: github://syssi/esphome-jk-bms
@@ -14,10 +15,11 @@ esp32:
 wifi:
   ssid: "Ta2"
   password: "09122004"
+  power_save_mode: LIGHT
 
-# Вмикаємо легкий веб-інтерфейс (порт 80)
+# Вмикаємо веб-інтерфейс V2
 web_server:
-  port: 1883
+  port: 80
   version: 2
 
 logger:
@@ -43,14 +45,19 @@ jk_bms_ble:
   - ble_client_id: bms_dev_1
     id: my_jkbms_1
     protocol_version: 'JK02_32S'
-    update_interval: 10s
+    update_interval: 15s
 
   - ble_client_id: bms_dev_2
     id: my_jkbms_2
     protocol_version: 'JK02_32S'
-    update_interval: 10s
+    update_interval: 15s
 
 sensor:
+  # Датчик для діагностики вільної пам'яті ESP32-C3
+  - platform: debug
+    free:
+      name: "Вільна оперативна пам'ять Heap"
+
   # ================= АКУМУЛЯТОР 40 =================
   - platform: jk_bms_ble
     jk_bms_ble_id: my_jkbms_1
