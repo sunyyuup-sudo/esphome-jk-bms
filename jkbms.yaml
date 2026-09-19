@@ -17,7 +17,7 @@ wifi:
 
 # Вмикаємо легкий веб-інтерфейс (порт 80)
 web_server:
-  port: 80
+  port: 1883
   version: 2
 
 logger:
