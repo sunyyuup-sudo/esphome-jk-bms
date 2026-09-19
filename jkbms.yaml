@@ -11,14 +11,27 @@ wifi:
   ssid: "Ta2"
   password: "09122004"
 
-# Залишаємо локальний веб-сервер як резервний канал
+# Резервний веб-сервер
 web_server:
   port: 80
 
-# Локальний API для можливих інтеграцій
+# Можливість оновлення прошивки по Wi-Fi (OTA)
+ota:
+  - platform: esphome
+
+# Локальний API
 api:
 
-# Інтеграція з MQTT для мобільного додатка MQTT Dash
+# Налаштування логування
+logger:
+  level: WARN
+  logs:
+    esp32_ble: ERROR
+    ble_client: ERROR
+    jk_bms_ble: WARN
+    mqtt: WARN
+
+# Інтеграція з MQTT
 mqtt:
   broker: broker.hivemq.com
   port: 1883
@@ -52,120 +65,221 @@ switch:
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_1
     charging:
+      id: bms1_switch_charging
       name: "🟢 [40A]- Керування зарядом"
+      icon: "mdi:battery-charging"
     discharging:
+      id: bms1_switch_discharging
       name: "🟢 [40A]- Керування розрядом"
+      icon: "mdi:power-plug"
     balancer:
+      id: bms1_switch_balancer
       name: "🟢 [40A]- Балансувальник"
+      icon: "mdi:scale-balance"
 
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_2
     charging:
+      id: bms2_switch_charging
       name: "🔴 [100A]- Керування зарядом"
+      icon: "mdi:battery-charging"
     discharging:
+      id: bms2_switch_discharging
       name: "🔴 [100A]- Керування розрядом"
+      icon: "mdi:power-plug"
     balancer:
+      id: bms2_switch_balancer
       name: "🔴 [100A]- Балансувальник"
+      icon: "mdi:scale-balance"
 
 button:
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_1
     restart:
+      id: bms1_btn_restart
       name: "🟢 [40A]- Перезавантажити"
+      icon: "mdi:restart"
+
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_2
     restart:
+      id: bms2_btn_restart
       name: "🔴 [100A]- Перезавантажити"
+      icon: "mdi:restart"
 
 sensor:
-  # ================= БАТАРЕЯ 1 =================
+  # ================= БАТАРЕЯ 1 (40Ah) =================
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_1
 
     total_voltage:
+      id: bms1_total_voltage
       name: "🟢 [40A]- Напруга АКБ"
+      icon: "mdi:lightning-bolt"
     current:
+      id: bms1_current
       name: "🟢 [40A]- Струм"
+      icon: "mdi:current-dc"
+    charging_current:
+      id: bms1_charging_current
+      name: "🟢 [40A]- Струм заряду"
+      icon: "mdi:current-ac"
     power:
+      id: bms1_power
       name: "🟢 [40A]- Потужність"
+      icon: "mdi:flash"
     state_of_charge:
+      id: bms1_soc
       name: "🟢 [40A]- Заряд SOC (%)"
+      icon: "mdi:battery-50"
     capacity_remaining:
+      id: bms1_capacity_remaining
       name: "🟢 [40A]- Залишкова ємність (Ач)"
+      icon: "mdi:gauge"
     
     min_cell_voltage:
+      id: bms1_min_cell_voltage
       name: "🟢 [40A]- Мін. напруга комірки"
+      icon: "mdi:battery-arrow-down"
     max_cell_voltage:
+      id: bms1_max_cell_voltage
       name: "🟢 [40A]- Макс. напруга комірки"
+      icon: "mdi:battery-arrow-up"
     delta_cell_voltage:
+      id: bms1_delta_cell_voltage
       name: "🟢 [40A]- Різниця напруг (Дельта)"
+      icon: "mdi:sigma-lower"
 
-    power_tube_temperature:
+    mosfet_temperature:
+      id: bms1_mosfet_temp
       name: "🟢 [40A]- Температура MOSFET"
+      icon: "mdi:microchip"
     temperature_sensor_1:
+      id: bms1_temp1
       name: "🟢 [40A]- Температура АКБ T1"
+      icon: "mdi:thermometer"
     temperature_sensor_2:
+      id: bms1_temp2
       name: "🟢 [40A]- Температура АКБ T2"
+      icon: "mdi:thermometer"
 
     cell_voltage_1:
+      id: bms1_cell_1
       name: "🟢 [40A]- Комірка 1"
+      icon: "mdi:battery-single"
     cell_voltage_2:
+      id: bms1_cell_2
       name: "🟢 [40A]- Комірка 2"
+      icon: "mdi:battery-single"
     cell_voltage_3:
+      id: bms1_cell_3
       name: "🟢 [40A]- Комірка 3"
+      icon: "mdi:battery-single"
     cell_voltage_4:
+      id: bms1_cell_4
       name: "🟢 [40A]- Комірка 4"
+      icon: "mdi:battery-single"
     cell_voltage_5:
+      id: bms1_cell_5
       name: "🟢 [40A]- Комірка 5"
+      icon: "mdi:battery-single"
     cell_voltage_6:
+      id: bms1_cell_6
       name: "🟢 [40A]- Комірка 6"
+      icon: "mdi:battery-single"
     cell_voltage_7:
+      id: bms1_cell_7
       name: "🟢 [40A]- Комірка 7"
+      icon: "mdi:battery-single"
     cell_voltage_8:
+      id: bms1_cell_8
       name: "🟢 [40A]- Комірка 8"
+      icon: "mdi:battery-single"
 
-  # ================= БАТАРЕЯ 2 =================
+  # ================= БАТАРЕЯ 2 (100Ah) =================
   - platform: jk_bms_ble
     jk_bms_ble_id: jkbms_dev_2
 
     total_voltage:
+      id: bms2_total_voltage
       name: "🔴 [100A]- Напруга АКБ"
+      icon: "mdi:lightning-bolt"
     current:
+      id: bms2_current
       name: "🔴 [100A]- Струм"
+      icon: "mdi:current-dc"
+    charging_current:
+      id: bms2_charging_current
+      name: "🔴 [100A]- Струм заряду"
+      icon: "mdi:current-ac"
     power:
+      id: bms2_power
       name: "🔴 [100A]- Потужність"
+      icon: "mdi:flash"
     state_of_charge:
+      id: bms2_soc
       name: "🔴 [100A]- Заряд SOC (%)"
+      icon: "mdi:battery-80"
     capacity_remaining:
+      id: bms2_capacity_remaining
       name: "🔴 [100A]- Залишкова ємність (Ач)"
+      icon: "mdi:gauge"
     
     min_cell_voltage:
+      id: bms2_min_cell_voltage
       name: "🔴 [100A]- Мін. напруга комірки"
+      icon: "mdi:battery-arrow-down"
     max_cell_voltage:
+      id: bms2_max_cell_voltage
       name: "🔴 [100A]- Макс. напруга комірки"
+      icon: "mdi:battery-arrow-up"
     delta_cell_voltage:
+      id: bms2_delta_cell_voltage
       name: "🔴 [100A]- Різниця напруг (Дельта)"
+      icon: "mdi:sigma-lower"
 
-    power_tube_temperature:
+    mosfet_temperature:
+      id: bms2_mosfet_temp
       name: "🔴 [100A]- Температура MOSFET"
+      icon: "mdi:microchip"
     temperature_sensor_1:
+      id: bms2_temp1
       name: "🔴 [100A]- Температура АКБ T1"
+      icon: "mdi:thermometer"
     temperature_sensor_2:
+      id: bms2_temp2
       name: "🔴 [100A]- Температура АКБ T2"
+      icon: "mdi:thermometer"
 
     cell_voltage_1:
+      id: bms2_cell_1
       name: "🔴 [100A]- Комірка 1"
+      icon: "mdi:battery-single"
     cell_voltage_2:
+      id: bms2_cell_2
       name: "🔴 [100A]- Комірка 2"
+      icon: "mdi:battery-single"
     cell_voltage_3:
+      id: bms2_cell_3
       name: "🔴 [100A]- Комірка 3"
+      icon: "mdi:battery-single"
     cell_voltage_4:
+      id: bms2_cell_4
       name: "🔴 [100A]- Комірка 4"
+      icon: "mdi:battery-single"
     cell_voltage_5:
+      id: bms2_cell_5
       name: "🔴 [100A]- Комірка 5"
+      icon: "mdi:battery-single"
     cell_voltage_6:
+      id: bms2_cell_6
       name: "🔴 [100A]- Комірка 6"
+      icon: "mdi:battery-single"
     cell_voltage_7:
+      id: bms2_cell_7
       name: "🔴 [100A]- Комірка 7"
+      icon: "mdi:battery-single"
     cell_voltage_8:
+      id: bms2_cell_8
       name: "🔴 [100A]- Комірка 8"
+      icon: "mdi:battery-single"
