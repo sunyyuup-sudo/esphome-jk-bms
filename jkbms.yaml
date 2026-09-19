@@ -1,63 +1,171 @@
 esphome:
-  name: dual-jkibms-dashboard
-  friendly_name: Акумулятори
-
-external_components:
-  - source: github://syssi/esphome-jk-bms
-    components: [ jk_bms_ble ]
+  name: dual-jkbms-dashboard
 
 esp32:
   board: esp32-c3-devkitm-1
+  variant: esp32c3
   framework:
-    type: arduino
+    type: esp-idf
 
 wifi:
   ssid: "Ta2"
   password: "09122004"
-  power_save_mode: LIGHT
 
-# Веб-інтерфейс (порт 80)
+# Залишаємо локальний веб-сервер як резервний канал
 web_server:
   port: 80
-  version: 2
 
-logger:
-  level: WARN
-  logs:
-    esp32_ble: ERROR
-    ble_client: ERROR
-    jk_bms_ble: WARN
-    mqtt: WARN
+# Локальний API для можливих інтеграцій
+api:
 
-# Обов’язковий компонент для роботи sensor.debug
-debug:
+# Інтеграція з MQTT для мобільного додатка MQTT Dash
+mqtt:
+  broker: broker.hivemq.com
+  port: 1883
+  topic_prefix: "jkbms_ta2"
 
-ota:
-  - platform: esphome
+esp32_ble_tracker:
 
-esp32_ble:
-
+# Реєструємо дві плати BMS за їхніми MAC-адресами
 ble_client:
   - mac_address: "98:DA:F0:0A:E9:85"
-    id: bms_dev_1
+    id: jkbms_ble_client_1
   - mac_address: "A4:C1:38:0F:3A:D5"
-    id: bms_dev_2
+    id: jkbms_ble_client_2
 
+external_components:
+  - source: github://syssi/esphome-jk-bms@main
+
+# Ініціалізація першої BMS
 jk_bms_ble:
-  - ble_client_id: bms_dev_1
-    id: my_jkbms_1
-    protocol_version: 'JK02_32S'
-    update_interval: 15s
+  - ble_client_id: jkbms_ble_client_1
+    id: jkbms_dev_1
+    protocol_version: JK02_32S
 
-  - ble_client_id: bms_dev_2
-    id: my_jkbms_2
-    protocol_version: 'JK02_32S'
-    update_interval: 15s
+# Ініціалізація другої BMS
+  - ble_client_id: jkbms_ble_client_2
+    id: jkbms_dev_2
+    protocol_version: JK02_32S
+
+# Перемикачі керування для обох плат
+switch:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_1
+    charging:
+      name: "4️⃣0️⃣ - Керування зарядом"
+    discharging:
+      name: "4️⃣0️⃣ - Керування розрядом"
+    balancer:
+      name: "4️⃣0️⃣ - Балансувальник"
+
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_2
+    charging:
+      name: "1️⃣0️⃣0️⃣ - Керування зарядом"
+    discharging:
+      name: "1️⃣0️⃣0️⃣ - Керування розрядом"
+    balancer:
+      name: "1️⃣0️⃣0️⃣ - Балансувальник"
+
+button:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_1
+    restart:
+      name: "4️⃣0️⃣ - Перезавантажити"
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_2
+    restart:
+      name: "1️⃣0️⃣0️⃣ - Перезавантажити"
 
 sensor:
-  # Тепер працюватиме коректно
-  - platform: debug
-    free:
-      name: "Вільна оперативна пам'ять Heap"
+  # ================= БАТАРЕЯ 1 =================
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_1
 
-  # Далі ваші сенсори BMS без змін...
+    total_voltage:
+      name: "4️⃣0️⃣ - Напруга АКБ"
+    current:
+      name: "4️⃣0️⃣ - Струм"
+    power:
+      name: "4️⃣0️⃣ - Потужність"
+    state_of_charge:
+      name: "4️⃣0️⃣ - Заряд SOC (%)"
+    capacity_remaining:
+      name: "4️⃣0️⃣ - Залишкова ємність (Ач)"
+    
+    min_cell_voltage:
+      name: "4️⃣0️⃣ - Мін. напруга комірки"
+    max_cell_voltage:
+      name: "4️⃣0️⃣ - Макс. напруга комірки"
+    delta_cell_voltage:
+      name: "4️⃣0️⃣ - Різниця напруг (Дельта)"
+
+    power_tube_temperature:
+      name: "4️⃣0️⃣ - Температура MOSFET"
+    temperature_sensor_1:
+      name: "4️⃣0️⃣ - Температура АКБ T1"
+    temperature_sensor_2:
+      name: "4️⃣0️⃣ - Температура АКБ T2"
+
+    cell_voltage_1:
+      name: "4️⃣0️⃣ - Комірка 1"
+    cell_voltage_2:
+      name: "4️⃣0️⃣ - Комірка 2"
+    cell_voltage_3:
+      name: "4️⃣0️⃣ - Комірка 3"
+    cell_voltage_4:
+      name: "4️⃣0️⃣ - Комірка 4"
+    cell_voltage_5:
+      name: "4️⃣0️⃣ - Комірка 5"
+    cell_voltage_6:
+      name: "4️⃣0️⃣ - Комірка 6"
+    cell_voltage_7:
+      name: "4️⃣0️⃣ - Комірка 7"
+    cell_voltage_8:
+      name: "4️⃣0️⃣ - Комірка 8"
+
+  # ================= БАТАРЕЯ 2 =================
+  - platform: jk_bms_ble
+    jk_bms_ble_id: jkbms_dev_2
+
+    total_voltage:
+      name: "1️⃣0️⃣0️⃣ - Напруга АКБ"
+    current:
+      name: "1️⃣0️⃣0️⃣ - Струм"
+    power:
+      name: "1️⃣0️⃣0️⃣ - Потужність"
+    state_of_charge:
+      name: "1️⃣0️⃣0️⃣ - Заряд SOC (%)"
+    capacity_remaining:
+      name: "1️⃣0️⃣0️⃣ - Залишкова ємність (Ач)"
+    
+    min_cell_voltage:
+      name: "1️⃣0️⃣0️⃣ - Мін. напруга комірки"
+    max_cell_voltage:
+      name: "1️⃣0️⃣0️⃣ - Макс. напруга комірки"
+    delta_cell_voltage:
+      name: "1️⃣0️⃣0️⃣ - Різниця напруг (Дельта)"
+
+    power_tube_temperature:
+      name: "1️⃣0️⃣0️⃣ - Температура MOSFET"
+    temperature_sensor_1:
+      name: "1️⃣0️⃣0️⃣ - Температура АКБ T1"
+    temperature_sensor_2:
+      name: "1️⃣0️⃣0️⃣ - Температура АКБ T2"
+
+    cell_voltage_1:
+      name: "1️⃣0️⃣0️⃣ - Комірка 1"
+    cell_voltage_2:
+      name: "1️⃣0️⃣0️⃣ - Комірка 2"
+    cell_voltage_3:
+      name: "1️⃣0️⃣0️⃣ - Комірка 3"
+    cell_voltage_4:
+      name: "1️⃣0️⃣0️⃣ - Комірка 4"
+    cell_voltage_5:
+      name: "1️⃣0️⃣0️⃣ - Комірка 5"
+    cell_voltage_6:
+      name: "1️⃣0️⃣0️⃣ - Комірка 6"
+    cell_voltage_7:
+      name: "1️⃣0️⃣0️⃣ - Комірка 7"
+    cell_voltage_8:
+      name: "1️⃣0️⃣0️⃣ - Комірка 8"
