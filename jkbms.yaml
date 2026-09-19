@@ -36,7 +36,8 @@ logger:
 # Інтеграція з MQTT (використовуємо прямий IP HiveMQ)
 mqtt:
   broker: 18.192.122.28
-  port: 1883
+  port: 8883
+  skip_cert_verify: true
   topic_prefix: "jkbms_ta2"
 
 # Оптимізоване сканування BLE для одноядерного ESP32-C3
