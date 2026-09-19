@@ -28,15 +28,15 @@ jobs:
             ~/.platformio
             ~/.cache/esphome
             .esphome
-          key: ${{ runner.os }}-esphome-v2-${{ hashFiles('**/jkbms.yaml') }}
+          key: ${{ runner.os }}-esphome-v4-${{ hashFiles('**/jkbms.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-esphome-v2-
+            ${{ runner.os }}-esphome-v4-
 
       - name: Pre-download ESP-IDF Toolchain (if not cached)
         if: steps.cache-platformio.outputs.cache-hit != 'true'
         run: |
           mkdir -p ~/.platformio/packages
-          echo "Downloading ESP-IDF toolchain via wget with retries..."
+          echo "Downloading ESP-IDF toolchain..."
           wget --retry-connrefused --waitretry=2 --read-timeout=30 --timeout=20 -t 10 \
             https://github.com/pioarduino/esp-idf/releases/download/v5.5.4/esp-idf-v5.5.4.tar.xz \
             -O /tmp/esp-idf-v5.5.4.tar.xz
@@ -55,11 +55,14 @@ jobs:
         run: |
           esphome compile jkbms.yaml
 
-     - name: Upload compiled binary artifact
+      - name: Check generated binaries
+        run: |
+          echo "=== Searching for generated .bin files ==="
+          find .esphome/build -type f -name "*.bin"
+
+      - name: Upload compiled binary artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dual-jkibms-dashboard-firmware
-          path: |
-            .esphome/build/*/.pioenvs/*/*.bin
-            !.esphome/build/*/.pioenvs/*/firmware-factory.bin
+          name: dual-jkibms-dashboard-binary
+          path: .esphome/build/dual-jkibms-dashboard/.pioenvs/*/*.bin
           if-no-files-found: error
