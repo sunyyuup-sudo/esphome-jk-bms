@@ -27,4 +27,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: esp32c3-jkbms-firmware
-          path: .esphome/build/jkbms-dashboard/.pioenvs/jkbms-dashboard/firmware.factory.bin
+          path: .esphome/build/dual-jkbms-dashboard/.pioenvs/dual-jkbms-dashboard/*.bin
