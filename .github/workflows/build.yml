@@ -44,4 +44,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: esphome-binary
-          path: .esphome/build/*/.pioenvs/*/*.bin
+          path: .esphome/build/dual-jkbms-dashboard/.pioenvs/dual-jkbms-dashboard/firmware.bin
