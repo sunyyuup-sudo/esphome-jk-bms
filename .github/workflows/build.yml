@@ -64,5 +64,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dual-jkibms-dashboard-binary
-          path: .esphome/build/dual-jkibms-dashboard/.pioenvs/*/*.bin
+          path: |
+            .esphome/build/dual-jkibms-dashboard/.pioenvs/dual-jkibms-dashboard/firmware.bin
+            .esphome/build/dual-jkibms-dashboard/.pioenvs/dual-jkibms-dashboard/firmware.factory.bin
+            .esphome/build/dual-jkibms-dashboard/.pioenvs/dual-jkibms-dashboard/firmware.ota.bin
           if-no-files-found: error
