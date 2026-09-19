@@ -11,6 +11,8 @@ esp32:
 wifi:
   ssid: "Ta2"
   password: "09122004"
+  dns1: 8.8.8.8
+  dns2: 1.1.1.1
 
 # Резервний веб-сервер
 web_server:
@@ -32,13 +34,18 @@ logger:
     jk_bms_ble: WARN
     mqtt: WARN
 
-# Інтеграція з MQTT
+# Інтеграція з MQTT (використовуємо прямий IP HiveMQ для запобігання DNS-помилкам)
 mqtt:
-  broker: broker.hivemq.com
+  broker: 18.192.122.28
   port: 1883
   topic_prefix: "jkbms_ta2"
 
+# Оптимізоване сканування BLE для одноядерного ESP32-C3
 esp32_ble_tracker:
+  scan_parameters:
+    interval: 110ms
+    window: 100ms
+    active: false
 
 # Реєструємо дві плати BMS за їхніми MAC-адресами
 ble_client:
@@ -123,16 +130,8 @@ sensor:
       icon: "mdi:current-dc"
     power:
       id: bms1_power
-      name: "🟢 [40A]- Потужність"
+      name: "🟢 [40A]-  Потужність заряджання"
       icon: "mdi:flash"
-    charging_power:
-      id: bms1_charging_power
-      name: "🟢 [40A]- Потужність заряду"
-      icon: "mdi:battery-charging"
-    discharging_power:
-      id: bms1_discharging_power
-      name: "🟢 [40A]- Потужність розряду"
-      icon: "mdi:power-plug"
     state_of_charge:
       id: bms1_soc
       name: "🟢 [40A]- Заряд SOC (%)"
@@ -215,16 +214,8 @@ sensor:
       icon: "mdi:current-dc"
     power:
       id: bms2_power
-      name: "🔴 [100A]- Потужність"
+      name: "🔴 [100A]- Потужність заряджання"
       icon: "mdi:flash"
-    charging_power:
-      id: bms2_charging_power
-      name: "🔴 [100A]- Потужність заряду"
-      icon: "mdi:battery-charging"
-    discharging_power:
-      id: bms2_discharging_power
-      name: "🔴 [100A]- Потужність розряду"
-      icon: "mdi:power-plug"
     state_of_charge:
       id: bms2_soc
       name: "🔴 [100A]- Заряд SOC (%)"
