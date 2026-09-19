@@ -55,8 +55,11 @@ jobs:
         run: |
           esphome compile jkbms.yaml
 
-      - name: Upload compiled binary artifact
+     - name: Upload compiled binary artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dual-jkibms-dashboard-binary
-          path: .esphome/build/*/.pioenvs/*/*.bin
+          name: dual-jkibms-dashboard-firmware
+          path: |
+            .esphome/build/*/.pioenvs/*/*.bin
+            !.esphome/build/*/.pioenvs/*/firmware-factory.bin
+          if-no-files-found: error
