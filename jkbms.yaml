@@ -35,7 +35,7 @@ logger:
 
 # Інтеграція з MQTT (використовуємо прямий IP HiveMQ)
 mqtt:
-  broker: 18.192.122.28
+  broker: broker.hivemq.com
   port: 1883
   topic_prefix: "jkbms_ta2"
 
