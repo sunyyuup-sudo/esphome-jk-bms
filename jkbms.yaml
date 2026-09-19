@@ -11,8 +11,7 @@ esp32:
 wifi:
   ssid: "Ta2"
   password: "09122004"
-  dns1: 8.8.8.8
-  dns2: 1.1.1.1
+  # Ключі dns1 та dns2 видалено, оскільки підключення до MQTT йде за прямою IP-адресою
 
 # Резервний веб-сервер
 web_server:
@@ -34,7 +33,7 @@ logger:
     jk_bms_ble: WARN
     mqtt: WARN
 
-# Інтеграція з MQTT (використовуємо прямий IP HiveMQ для запобігання DNS-помилкам)
+# Інтеграція з MQTT (використовуємо прямий IP HiveMQ)
 mqtt:
   broker: 18.192.122.28
   port: 1883
@@ -130,7 +129,7 @@ sensor:
       icon: "mdi:current-dc"
     power:
       id: bms1_power
-      name: "🟢 [40A]-  Потужність заряджання"
+      name: "🟢 [40A]- Загальна потужність"
       icon: "mdi:flash"
     state_of_charge:
       id: bms1_soc
@@ -214,7 +213,7 @@ sensor:
       icon: "mdi:current-dc"
     power:
       id: bms2_power
-      name: "🔴 [100A]- Потужність заряджання"
+      name: "🔴 [100A]- Загальна потужність"
       icon: "mdi:flash"
     state_of_charge:
       id: bms2_soc
@@ -283,3 +282,61 @@ sensor:
       id: bms2_cell_8
       name: "🔴 [100A]- Комірка 8"
       icon: "mdi:battery-single"
+
+  # ================= ДОДАТКОВІ ШАБЛОННІ СЕНСОРИ ДЛЯ ПОТУЖНОСТІ (АКБ 1) =================
+  - platform: template
+    name: "🟢 [40A]- Потужність заряджання"
+    id: bms1_charging_power
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    icon: "mdi:battery-charging"
+    lambda: |-
+      if (id(bms1_current).state > 0) {
+        return id(bms1_power).state;
+      } else {
+        return 0.0;
+      }
+
+  - platform: template
+    name: "🟢 [40A]- Потужність розряджання"
+    id: bms1_discharging_power
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    icon: "mdi:power-plug"
+    lambda: |-
+      if (id(bms1_current).state < 0) {
+        return std::abs(id(bms1_power).state);
+      } else {
+        return 0.0;
+      }
+
+  # ================= ДОДАТКОВІ ШАБЛОННІ СЕНСОРИ ДЛЯ ПОТУЖНОСТІ (АКБ 2) =================
+  - platform: template
+    name: "🔴 [100A]- Потужність заряджання"
+    id: bms2_charging_power
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    icon: "mdi:battery-charging"
+    lambda: |-
+      if (id(bms2_current).state > 0) {
+        return id(bms2_power).state;
+      } else {
+        return 0.0;
+      }
+
+  - platform: template
+    name: "🔴 [100A]- Потужність розряджання"
+    id: bms2_discharging_power
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    icon: "mdi:power-plug"
+    lambda: |-
+      if (id(bms2_current).state < 0) {
+        return std::abs(id(bms2_power).state);
+      } else {
+        return 0.0;
+      }
