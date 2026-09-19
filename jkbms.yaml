@@ -15,6 +15,11 @@ wifi:
   ssid: "Ta2"
   password: "09122004"
 
+# Вмикаємо легкий веб-інтерфейс (порт 80)
+web_server:
+  port: 80
+  version: 2
+
 logger:
   level: WARN
   logs:
@@ -22,8 +27,6 @@ logger:
     ble_client: ERROR
     jk_bms_ble: WARN
     mqtt: WARN
-
-api:
 
 ota:
   - platform: esphome
@@ -40,12 +43,12 @@ jk_bms_ble:
   - ble_client_id: bms_dev_1
     id: my_jkbms_1
     protocol_version: 'JK02_32S'
-    update_interval: 5s
+    update_interval: 10s
 
   - ble_client_id: bms_dev_2
     id: my_jkbms_2
     protocol_version: 'JK02_32S'
-    update_interval: 5s
+    update_interval: 10s
 
 sensor:
   # ================= АКУМУЛЯТОР 40 =================
