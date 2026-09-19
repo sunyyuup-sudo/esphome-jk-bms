@@ -37,7 +37,7 @@ logger:
 mqtt:
   broker: 18.192.122.28
   port: 8883
-  skip_cert_verify: true
+  certificate_authority: ""
   topic_prefix: "jkbms_ta2"
 
 # Оптимізоване сканування BLE для одноядерного ESP32-C3
